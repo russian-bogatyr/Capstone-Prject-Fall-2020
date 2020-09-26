@@ -75,11 +75,11 @@ for face in faces:
 
 
 # show the image
-cv2.imshow(winname="Face", mat=img)
+#cv2.imshow(winname="Face", mat=img)
 # Delay between every fram
-cv2.waitKey(delay=0)
+#cv2.waitKey(delay=0)
 # Close all windows
-cv2.destroyAllWindows()
+#cv2.destroyAllWindows()
 
 
 # In[ ]:
