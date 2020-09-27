@@ -1,42 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[ ]:
-
-
-import cv2
+#import cv2
 import numpy as np
 import dlib
-import sys
-
-
-# In[ ]:
-
 
 # Load the detector
 detector = dlib.get_frontal_face_detector()
 
-
-# In[ ]:
-
-
 # Load the predictor
 predictor = dlib.shape_predictor(r"shape_predictor_68_face_landmarks.dat")
-
-
-# In[ ]:
-
 
 # read the image
 img = cv2.imread(r"3.jpeg")
 
-
-# In[ ]:
-
-
 # Convert image into grayscale
 gray = cv2.cvtColor(src=img, code=cv2.COLOR_BGR2GRAY)
-
 
 # # Jaw Points = 0–16
 # # Right Brow Points = 17–21
@@ -46,10 +24,6 @@ gray = cv2.cvtColor(src=img, code=cv2.COLOR_BGR2GRAY)
 # # Left Eye Points = 42–47
 # # Mouth Points = 48–60
 # # Lips Points = 61–67
-# 
-
-# In[ ]:
-
 
 # Use detector to find landmarks
 empty_array = np.array([])
@@ -70,35 +44,36 @@ for face in faces:
         cv2.circle(img=img, center=(x, y), radius=3, color=(0,
         255, 0), thickness=-1)
 
+<<<<<<< Updated upstream
 
 # In[ ]:
 
+=======
+>>>>>>> Stashed changes
 # show the image
 #cv2.imshow(winname="Face", mat=img)
 # Delay between every fram
 #cv2.waitKey(delay=0)
 # Close all windows
+<<<<<<< Updated upstream
 #cv2.destroyAllWindows()
 
 
 # In[ ]:
 
 
+=======
+cv2.destroyAllWindows()
+>>>>>>> Stashed changes
 print(empty_array)
-
-
-# In[ ]:
-
-
 empty_array.reshape(-1, 2)
+<<<<<<< Updated upstream
 
 
 # In[ ]:
+=======
+>>>>>>> Stashed changes
 empty_array.zscore()
-
-
-# In[ ]:
-
 
 
 
