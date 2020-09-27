@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-#import cv2
+import cv2
 import numpy as np
 import dlib
 
@@ -44,35 +44,16 @@ for face in faces:
         cv2.circle(img=img, center=(x, y), radius=3, color=(0,
         255, 0), thickness=-1)
 
-<<<<<<< Updated upstream
-
-# In[ ]:
-
-=======
->>>>>>> Stashed changes
 # show the image
 #cv2.imshow(winname="Face", mat=img)
 # Delay between every fram
 #cv2.waitKey(delay=0)
 # Close all windows
-<<<<<<< Updated upstream
-#cv2.destroyAllWindows()
 
-
-# In[ ]:
-
-
-=======
 cv2.destroyAllWindows()
->>>>>>> Stashed changes
 print(empty_array)
 empty_array.reshape(-1, 2)
-<<<<<<< Updated upstream
 
-
-# In[ ]:
-=======
->>>>>>> Stashed changes
 empty_array.zscore()
 
 
