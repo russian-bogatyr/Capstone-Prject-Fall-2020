@@ -11,7 +11,7 @@ detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(r"shape_predictor_68_face_landmarks.dat")
 
 # read the image
-img = cv2.imread(r"3.jpeg")
+img = cv2.imread(r"opencv_frame_0.png")
 
 # Convert image into grayscale
 gray = cv2.cvtColor(src=img, code=cv2.COLOR_BGR2GRAY)
