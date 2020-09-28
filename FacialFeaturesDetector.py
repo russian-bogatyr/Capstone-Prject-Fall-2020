@@ -36,25 +36,23 @@ for face in faces:
     # Create landmark object
     landmarks = predictor(image=gray, box=face)
     # Loop through all the points
-    for n in range(0, 27):
+    for n in range(0, 68):
         x = landmarks.part(n).x
         y = landmarks.part(n).y        
-        empty_array = np.append(empty_array, [[x, y]] , axis = 0)
+        empty_array = np.append(empty_array, [x, y] , axis = 0)
         # Draw a circle
         cv2.circle(img=img, center=(x, y), radius=3, color=(0,
         255, 0), thickness=-1)
 
 # show the image
-#cv2.imshow(winname="Face", mat=img)
+cv2.imshow(winname="Face", mat=img)
 # Delay between every fram
 #cv2.waitKey(delay=0)
 # Close all windows
 
-cv2.destroyAllWindows()
-print(empty_array)
-empty_array.reshape(-1, 2)
-
-empty_array.zscore()
+#cv2.destroyAllWindows()
+#print(empty_array)
+#empty_array.reshape(-1, 2)
 
 
 
