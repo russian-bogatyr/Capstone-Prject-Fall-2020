@@ -8,11 +8,13 @@ Created on Tue Sep 29 18:31:36 2020
 
 import tkinter as tk
 import csv
+import random
+import os
 
 r = tk.Tk()
 textBox = tk.Text(r)
 
-with open('21_1_2_20170104020235605.csv.chip.csv') as csv_file:
+with open(random.choice(os.listdir(os.curdir))) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
     for row in csv_reader:
