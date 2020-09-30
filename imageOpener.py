@@ -5,7 +5,7 @@ import os
 """
 filename = input("Enter your value: ")
 """
-filename = random.choice(os.listdir(os.curdir))
+filename = random.choice(os.listdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces')))
 #read the image
 im1 = Image.open(filename)
 

@@ -13,7 +13,7 @@ import os
 
 r = tk.Tk()
 textBox = tk.Text(r)
-
+os.chdir(os.path.join(os.path.dirname(os.curdir), 'csv_files'))
 with open(random.choice(os.listdir(os.curdir))) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
