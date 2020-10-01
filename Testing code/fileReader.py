@@ -6,8 +6,14 @@ Created on Wed Sep 30 17:25:02 2020
 """
 
 import csv
+import os
+import random
 
-with open('21_1_2_20170104020235605.csv.chip.csv') as csv_file:
+os.chdir(os.pardir)
+os.chdir(os.path.join(os.path.dirname(os.curdir), 'csv_files'))
+filename = random.choice(os.listdir(os.curdir))
+
+with open(filename) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
     for row in csv_reader:
