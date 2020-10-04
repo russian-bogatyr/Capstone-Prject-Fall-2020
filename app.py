@@ -2,7 +2,7 @@
 """
 Created on Sun Oct  4 15:29:09 2020
 
-@author: some guy on stack
+@author: Chris Graziano
 """
 import tkinter as tk
 from tkinter import font as tkfont
@@ -11,6 +11,8 @@ import csv
 import random
 import os
 
+#choosing the face
+#this will be imported later
 goodDir=os.curdir
 os.chdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces'))
 imageName = random.choice(os.listdir(os.curdir))
@@ -19,7 +21,8 @@ os.chdir(goodDir)
 imagePath= imageName
 os.chdir(goodDir)
 filePath = "csv_files/"+fileName+".csv.chip.csv"
-class SampleApp(tk.Tk):
+
+class NoseApp(tk.Tk):
     
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -51,7 +54,8 @@ class SampleApp(tk.Tk):
         '''Show a frame for the given page name'''
         frame = self.frames[page_name]
         frame.tkraise()
-        os.chdir(os.curdir)
+        self.title('Nose Goes')
+        frame.configure(background='light blue')
 
 class StartPage(tk.Frame):
 
@@ -74,10 +78,11 @@ class PageOne(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="This is page 1", font=controller.title_font)
+        label = tk.Label(self, text="This is your selected face", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
         img = ImageTk.PhotoImage(Image.open(imagePath))
-        imageLabel = tk.Label(self, image = img, pady=10)
+        imageLabel = tk.Label(self, image = img)
+        imageLabel.image = img
         imageLabel.pack(fill = "x", expand = "yes")
         button = tk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
@@ -89,7 +94,7 @@ class PageTwo(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="This is page 2", font=controller.title_font)
+        label = tk.Label(self, text="These are the facial coordinates", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
         textBox = tk.Text(self)
         os.chdir(os.pardir)
@@ -103,13 +108,11 @@ class PageTwo(tk.Frame):
                 else:
                     textBox.insert(tk.INSERT, f'\t{row[0]} x:{row[1]}, y:{row[2]}')
                     line_count += 1
-        textBox.insert(tk.INSERT, f'Processed {line_count} lines.')
         textBox.pack(side = "top")
         button = tk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
 
-
 if __name__ == "__main__":
-    app = SampleApp()
+    app = NoseApp()
     app.mainloop()
