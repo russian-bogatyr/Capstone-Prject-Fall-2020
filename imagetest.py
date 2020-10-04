@@ -2,7 +2,6 @@
 # PIL needs to be downloaded for this to work.
 
 import tkinter as tk
-import os
 from PIL import ImageTk, Image
 
 window = tk.Tk()
