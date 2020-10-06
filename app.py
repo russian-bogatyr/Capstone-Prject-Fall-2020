@@ -12,16 +12,15 @@ import random
 import os
 
 #choosing the face
-#this will be imported later
-goodDir=os.curdir
+#this will be imported in a later version of the app
+#we have to navigate to Sample faces first because there are more csvs than faces.
 os.chdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces'))
 imageName = random.choice(os.listdir(os.curdir))
 fileName = imageName[:-13]
-os.chdir(goodDir)
 imagePath= imageName
-os.chdir(goodDir)
 filePath = "csv_files/"+fileName+".csv.chip.csv"
 
+#this class organizes all of the frames
 class NoseApp(tk.Tk):
     
     def __init__(self, *args, **kwargs):
@@ -50,6 +49,7 @@ class NoseApp(tk.Tk):
 
         self.show_frame("StartPage")
 
+    #this method configures and displays a frame
     def show_frame(self, page_name):
         '''Show a frame for the given page name'''
         frame = self.frames[page_name]
@@ -57,6 +57,7 @@ class NoseApp(tk.Tk):
         self.title('Nose Goes')
         frame.configure(background='light blue')
 
+#this class displays the initial frame
 class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -72,7 +73,7 @@ class StartPage(tk.Frame):
         button1.pack()
         button2.pack()
         
-
+#this class displays the frame that shows the image
 class PageOne(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -88,7 +89,7 @@ class PageOne(tk.Frame):
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
 
-
+#this class displays the frame that shows the file
 class PageTwo(tk.Frame):
 
     def __init__(self, parent, controller):
