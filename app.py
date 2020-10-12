@@ -10,6 +10,10 @@ from PIL import ImageTk, Image
 import csv
 import random
 import os
+import FacialFeatureClass
+import KNNalg
+import taking_picture
+
 
 #choosing the face
 #this will be imported in a later version of the app
@@ -19,7 +23,7 @@ imageName = random.choice(os.listdir(os.curdir))
 fileName = imageName[:-13]
 imagePath= imageName
 filePath = "csv_files/"+fileName+".csv.chip.csv"
-
+faceFeats = FacialFeatureClass.FacialFeatures(imagePath)
 #this class organizes all of the frames
 class NoseApp(tk.Tk):
     
@@ -66,10 +70,8 @@ class StartPage(tk.Frame):
         label = tk.Label(self, text="Welcome to the M-LAR experience", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
 
-        button1 = tk.Button(self, text="Display the face(s)",
-                            command=lambda: controller.show_frame("PageOne"))
-        button2 = tk.Button(self, text="Display the csv(s)",
-                            command=lambda: controller.show_frame("PageTwo"))
+        button1 = tk.Button(self, text="Display the face(s)", command=lambda: controller.show_frame("PageOne"))
+        button2 = tk.Button(self, text="Display the csv(s)", command=lambda: controller.show_frame("PageTwo"))
         button1.pack()
         button2.pack()
         
@@ -80,6 +82,8 @@ class PageOne(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         label = tk.Label(self, text="This is your selected face", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        label = tk.Label(self, text=faceFeats.calculateFacialSize(), font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
         img = ImageTk.PhotoImage(Image.open(imagePath))
         imageLabel = tk.Label(self, image = img)

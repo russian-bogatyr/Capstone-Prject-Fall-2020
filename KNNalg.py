@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Oct 11 17:40:07 2020
+Created on Sun Oct  4 15:29:09 2020
 
-@author: super
+@author: Chris Graziano
 """
 
 from math import sqrt
