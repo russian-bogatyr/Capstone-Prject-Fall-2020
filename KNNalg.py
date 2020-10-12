@@ -4,6 +4,7 @@ Created on Sun Oct 11 17:40:07 2020
 
 @author: super
 """
+
 from math import sqrt
 import matplotlib.pyplot as plt
 import numpy as np

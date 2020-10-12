@@ -44,8 +44,11 @@ class FacialFeatures:
     #cv2.waitKey(delay=0)
     # Close all windows
     #cv2.destroyAllWindows()
-    facial_coordinates = np.reshape(facial_points, (-1, 2))    
-    def calculate_facialSize(facial_coordinates):
-        width = facial_coordinates[16][0] - facial_coordinates[0][0] # top right(17) - top left(1)
-        height = facial_coordinates[8][1] - facial_coordinates[27][1] # bottom center(9) - top center(28)
+    facialCords = np.reshape(facial_points, (-1, 2))  
+    def calculateFacialSize(facialCords):
+        width = facialCords[16][0] - facialCords[0][0] # top right(17) - top left(1)
+        height = facialCords[8][1] - facialCords[27][1] # bottom center(9) - top center(28)
+        #print(width, height)
         return (width , height)
+    #calculateFacialSize(facial_coordinates)
+
