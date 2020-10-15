@@ -26,8 +26,9 @@ filePath = "csv_files/"+fileName+".csv.chip.csv"
 faceFeats = FacialFeatureClass.FacialFeatures(imagePath)
 
 #This function will run the taking_picture file
-def runTakingPicture():
+def runTakingPicture(controller):
     runner = pic.TakingPicture()
+    controller.show_frame("PageOne")
 
 #this class organizes all of the frames
 class NoseApp(tk.Tk):
@@ -74,13 +75,8 @@ class StartPage(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Welcome to the M-LAR experience", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-
-        button1 = tk.Button(self, text="Display the face(s)", command=lambda: controller.show_frame("PageOne"))
-        button2 = tk.Button(self, text="Display the csv(s)", command=lambda: controller.show_frame("PageTwo"))
-        button3 = tk.Button(self, text="Take picture", command=lambda: runTakingPicture())
-        button1.pack()
-        button2.pack()
-        button3.pack()
+        picButton = tk.Button(self, text="Take picture", command=lambda: runTakingPicture(controller))
+        picButton.pack()
 
 #this class displays the frame that shows the image
 class PageOne(tk.Frame):
@@ -96,9 +92,10 @@ class PageOne(tk.Frame):
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x", expand = "yes")
-        button = tk.Button(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("StartPage"))
+        button = tk.Button(self, text="Go to the start page", command=lambda: controller.show_frame("StartPage"))
+        button2 = tk.Button(self, text="Display the csv(s)", command=lambda: controller.show_frame("PageTwo"))
         button.pack()
+        button2.pack()
 
 #this class displays the frame that shows the file
 class PageTwo(tk.Frame):
