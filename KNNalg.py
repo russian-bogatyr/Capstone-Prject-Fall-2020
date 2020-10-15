@@ -15,10 +15,11 @@ class KnnAlgorithm:
         for i in range(len(test_point)-1):
            distance += (test_point[i] - neighbor_point[i])**2
         return sqrt(distance)
-    def get_neighbors(data_set, test_point, num_neighbors):
+    
+    def get_neighbors(self, data_set, test_point, num_neighbors):
        distances = list()
        for set_row in data_set:
-            dist = euclidean_distance(test_point, set_row)
+            dist = self.euclidean_distance(test_point, set_row)
             distances.append((set_row, dist))
        distances.sort(key=lambda tup: tup[1])
        neighbors = list()
