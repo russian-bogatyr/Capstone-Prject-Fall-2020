@@ -6,7 +6,7 @@ Created on Sun Oct  4 15:29:09 2020
 """
 import cv2
 
-class FacialFeatures():
+class TakingPicture:
     def __init__(self):
         cap = cv2.VideoCapture(0)
 
@@ -19,8 +19,8 @@ class FacialFeatures():
         while True:
             ret, frame = cap.read()
             #frame = cv2.resize(frame, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)
-            cv2.imshow('Input', frame)
-        
+            cv2.imshow('Press Space to take a picture. Press Esc to exit.', frame)
+
             c = cv2.waitKey(1)
             if c == 27:
                 #ESCAPE PRESSED
@@ -32,5 +32,5 @@ class FacialFeatures():
                 print("{} written!".format(img_name))
                 img_counter += 1
 
-            cap.release()
-            cv2.destroyAllWindows()
+        cap.release()
+        cv2.destroyAllWindows()
