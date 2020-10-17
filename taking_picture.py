@@ -29,6 +29,7 @@ class TakingPicture:
                 # SPACE pressed
                 img_name = "opencv_frame_{}.png".format(img_counter)
                 cv2.imwrite(img_name, frame)
+                #patient = frame
                 print("{} written!".format(img_name))
                 img_counter += 1
                 break

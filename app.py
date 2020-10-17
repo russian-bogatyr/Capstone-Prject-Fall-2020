@@ -28,7 +28,10 @@ faceFeats = FacialFeatureClass.FacialFeatures(imagePath)
 #This function will run the taking_picture file
 def runTakingPicture(controller):
     runner = pic.TakingPicture()
-    controller.show_frame("PageOne")
+    while True:
+        if runner != None:
+            controller.show_frame("PageOne")
+            break
 
 #this class organizes all of the frames
 class NoseApp(tk.Tk):
