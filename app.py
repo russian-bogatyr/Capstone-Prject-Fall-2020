@@ -25,14 +25,6 @@ imagePath= imageName
 filePath = "csv_files/"+fileName+".csv.chip.csv"
 faceFeats = FacialFeatureClass.FacialFeatures(imagePath)
 
-#This function will run the taking_picture file
-def runTakingPicture(controller):
-    runner = pic.TakingPicture()
-    while True:
-        if runner != None:
-            controller.show_frame("PageOne")
-            break
-
 #this class organizes all of the frames
 class NoseApp(tk.Tk):
 
@@ -82,6 +74,14 @@ class StartPage(tk.Frame):
         picButton.pack()
 
 #this class displays the frame that shows the image
+
+#This function will run the taking_picture file
+def runTakingPicture(controller):
+    runner = pic.TakingPicture()
+    while True:
+        if runner != None:
+            controller.show_frame("PageOne")
+            break
 class PageOne(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -91,7 +91,7 @@ class PageOne(tk.Frame):
         label.pack(side="top", fill="x", pady=10)
         label = tk.Label(self, text=faceFeats.calculateFacialSize(), font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-        img = ImageTk.PhotoImage(Image.open(imagePath))
+        img = ImageTk.PhotoImage(Image.open(pic.getPatientFace()))
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x", expand = "yes")
