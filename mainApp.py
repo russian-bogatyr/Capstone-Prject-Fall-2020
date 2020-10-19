@@ -11,8 +11,6 @@ import tkinter as tk
 from tkinter import font as tkfont
 from PIL import ImageTk, Image
 import csv
-import random
-import os
 import FacialFeatureClass
 import KNNalg
 import takingPicture
