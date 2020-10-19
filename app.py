@@ -43,7 +43,7 @@ class NoseApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo):
+        for F in (StartPage, PageTwo):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -70,8 +70,16 @@ class StartPage(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Welcome to the M-LAR experience", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-        picButton = tk.Button(self, text="Take picture", command=lambda: [controller.show_frame("PageOne"), PageOne.runTakingPicture(self)])
+        picButton = tk.Button(self, text="Take picture", command=lambda: self.createPageOne(parent, controller))
         picButton.pack()
+    def createPageOne(self, parent, controller):
+        self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+        frame = PageOne(parent=container, controller=self)
+        frame.tkraise()
 
 #this class displays the frame that shows the image
 
@@ -80,13 +88,18 @@ class StartPage(tk.Frame):
 class PageOne(tk.Frame):
 
     def __init__(self, parent, controller):
+        takePic = takingPicture.TakePicture()
+        while True:
+            if takePic != None:
+                pat = takePic.getPatientFace()
+                break
         tk.Frame.__init__(self, parent)
         self.controller = controller
         label = tk.Label(self, text="This is your selected face", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
         label = tk.Label(self, text=faceFeats.calculateFacialSize(), font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-        im = Image.fromarray(self.pat)
+        im = Image.fromarray(pat)
         img = ImageTk.PhotoImage(image = im)
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
@@ -95,12 +108,6 @@ class PageOne(tk.Frame):
         button2 = tk.Button(self, text="Display the csv(s)", command=lambda: controller.show_frame("PageTwo"))
         button.pack()
         button2.pack()
-    def runTakingPicture(self):
-        takePic = takingPicture.TakePicture()
-        while True:
-            if takePic != None:
-                self.pat = takePic.getPatientFace()
-                break
 
 #this class displays the frame that shows the file
 class PageTwo(tk.Frame):
