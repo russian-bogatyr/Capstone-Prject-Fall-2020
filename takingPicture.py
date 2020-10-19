@@ -5,7 +5,7 @@ Created on Sun Oct  4 15:29:09 2020
 @author: Chris Graziano
 """
 import cv2
-class TakingPicture:
+class TakePicture:
     def __init__(self):
         cap = cv2.VideoCapture(0)
 

@@ -12,7 +12,7 @@ import random
 import os
 import FacialFeatureClass
 import KNNalg
-import taking_picture as pic
+import takingPicture
 
 
 #choosing the face
@@ -24,7 +24,6 @@ fileName = imageName[:-13]
 imagePath= imageName
 filePath = "csv_files/"+fileName+".csv.chip.csv"
 faceFeats = FacialFeatureClass.FacialFeatures(imagePath)
-
 #this class organizes all of the frames
 class NoseApp(tk.Tk):
 
@@ -53,7 +52,6 @@ class NoseApp(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
 
         self.show_frame("StartPage")
-
     #this method configures and displays a frame
     def show_frame(self, page_name):
         '''Show a frame for the given page name'''
@@ -77,9 +75,9 @@ class StartPage(tk.Frame):
 
 #This function will run the taking_picture file
 def runTakingPicture(controller):
-    runner = pic.TakingPicture()
+    takePic = takingPicture.TakePicture()
     while True:
-        if runner != None:
+        if takePic != None:
             controller.show_frame("PageOne")
             break
 class PageOne(tk.Frame):
@@ -91,7 +89,7 @@ class PageOne(tk.Frame):
         label.pack(side="top", fill="x", pady=10)
         label = tk.Label(self, text=faceFeats.calculateFacialSize(), font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-        img = ImageTk.PhotoImage(Image.open(pic.getPatientFace()))
+        img = ImageTk.PhotoImage(Image.open(imagePath))
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x", expand = "yes")
