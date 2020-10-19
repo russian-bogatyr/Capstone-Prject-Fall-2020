@@ -10,11 +10,10 @@ import numpy as np
 import dlib
 
 class FacialFeatures():
-    def __init__(self, imagePath):
+    def __init__(self, img):
         detector = dlib.get_frontal_face_detector()
         predictor = dlib.shape_predictor(r"shape_predictor_68_face_landmarks.dat")
         #placeholder, should crate class for uploading picture
-        img = cv2.imread(imagePath)
         gray = cv2.cvtColor(src=img, code=cv2.COLOR_BGR2GRAY)
         # Use detector to find landmarks
         facialPoints = np.array([])
