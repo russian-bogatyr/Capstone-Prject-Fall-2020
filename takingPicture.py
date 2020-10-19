@@ -27,7 +27,6 @@ class TakePicture:
             if c%256 == 32:
                 # SPACE pressed
                 img_name = "opencv_frame_{}.png".format(img_counter)
-                cv2.imwrite(img_name, frame)
                 self.patient = frame
                 print("{} written!".format(img_name))
                 img_counter += 1

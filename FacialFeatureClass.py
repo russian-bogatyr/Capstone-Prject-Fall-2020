@@ -28,8 +28,7 @@ class FacialFeatures():
                 y = landmarks.part(n).y        
                 facialPoints = np.append(facialPoints, ([x, y]) , axis = 0)
                 # Draw a circle
-                cv2.circle(img=img, center=(x, y), radius=3, color=(0,
-                                                                    255, 0), thickness=-1)
+                cv2.circle(img=img, center=(x, y), radius=3, color=(0, 255, 0), thickness=-1)
                 
                 #show the image
                 #cv2.imshow(winname=\"Face\", mat=img)

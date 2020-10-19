@@ -24,6 +24,8 @@ fileName = imageName[:-13]
 imagePath= imageName
 filePath = "csv_files/"+fileName+".csv.chip.csv"
 faceFeats = FacialFeatureClass.FacialFeatures(imagePath)
+#takePic = takingPicture.TakePicture()
+#pat = takePic.getPatientFace()
 #this class organizes all of the frames
 class NoseApp(tk.Tk):
 
@@ -68,18 +70,13 @@ class StartPage(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Welcome to the M-LAR experience", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-        picButton = tk.Button(self, text="Take picture", command=lambda: runTakingPicture(controller))
+        picButton = tk.Button(self, text="Take picture", command=lambda: [controller.show_frame("PageOne"), PageOne.runTakingPicture(self)])
         picButton.pack()
 
 #this class displays the frame that shows the image
 
 #This function will run the taking_picture file
-def runTakingPicture(controller):
-    takePic = takingPicture.TakePicture()
-    while True:
-        if takePic != None:
-            controller.show_frame("PageOne")
-            break
+
 class PageOne(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -89,7 +86,8 @@ class PageOne(tk.Frame):
         label.pack(side="top", fill="x", pady=10)
         label = tk.Label(self, text=faceFeats.calculateFacialSize(), font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
-        img = ImageTk.PhotoImage(Image.open(imagePath))
+        im = Image.fromarray(self.pat)
+        img = ImageTk.PhotoImage(image = im)
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x", expand = "yes")
@@ -97,6 +95,12 @@ class PageOne(tk.Frame):
         button2 = tk.Button(self, text="Display the csv(s)", command=lambda: controller.show_frame("PageTwo"))
         button.pack()
         button2.pack()
+    def runTakingPicture(self):
+        takePic = takingPicture.TakePicture()
+        while True:
+            if takePic != None:
+                self.pat = takePic.getPatientFace()
+                break
 
 #this class displays the frame that shows the file
 class PageTwo(tk.Frame):
