@@ -10,9 +10,6 @@ from PIL import ImageTk, Image
 import csv
 import random
 import os
-import FacialFeatureClass
-import KNNalg
-import takingPicture
 
 
 #choosing the face
@@ -23,8 +20,6 @@ imageName = random.choice(os.listdir(os.curdir))
 fileName = imageName[:-13]
 imagePath= imageName
 filePath = "csv_files/"+fileName+".csv.chip.csv"
-#takePic = takingPicture.TakePicture()
-#pat = takePic.getPatientFace()
 #this class organizes all of the frames
 class NoseApp(tk.Tk):
 
@@ -73,9 +68,6 @@ class StartPage(tk.Frame):
         picButton.pack()
 
 #this class displays the frame that shows the image
-
-#This function will run the taking_picture file
-
 class PageOne(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
