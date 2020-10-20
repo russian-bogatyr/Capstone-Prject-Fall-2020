@@ -10,6 +10,10 @@ from PIL import ImageTk, Image
 import csv
 import random
 import os
+import FacialFeatureClass
+import KNNalg
+import takingPicture
+
 
 #choosing the face
 #this will be imported in a later version of the app
@@ -19,10 +23,11 @@ imageName = random.choice(os.listdir(os.curdir))
 fileName = imageName[:-13]
 imagePath= imageName
 filePath = "csv_files/"+fileName+".csv.chip.csv"
-
+#takePic = takingPicture.TakePicture()
+#pat = takePic.getPatientFace()
 #this class organizes all of the frames
 class NoseApp(tk.Tk):
-    
+
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -35,7 +40,7 @@ class NoseApp(tk.Tk):
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
-        
+
         self.frames = {}
         for F in (StartPage, PageOne, PageTwo):
             page_name = F.__name__
@@ -48,7 +53,6 @@ class NoseApp(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
 
         self.show_frame("StartPage")
-
     #this method configures and displays a frame
     def show_frame(self, page_name):
         '''Show a frame for the given page name'''
@@ -65,17 +69,14 @@ class StartPage(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Welcome to the M-LAR experience", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
+        picButton = tk.Button(self, text="Take picture", command=lambda: controller.show_frame("PageOne"))
+        picButton.pack()
 
-        button1 = tk.Button(self, text="Display the face(s)",
-                            command=lambda: controller.show_frame("PageOne"))
-        button2 = tk.Button(self, text="Display the csv(s)",
-                            command=lambda: controller.show_frame("PageTwo"))
-        button1.pack()
-        button2.pack()
-        
 #this class displays the frame that shows the image
-class PageOne(tk.Frame):
 
+#This function will run the taking_picture file
+
+class PageOne(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -85,9 +86,10 @@ class PageOne(tk.Frame):
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x", expand = "yes")
-        button = tk.Button(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("StartPage"))
+        button = tk.Button(self, text="Go to the start page", command=lambda: controller.show_frame("StartPage"))
+        button2 = tk.Button(self, text="Display the csv(s)", command=lambda: controller.show_frame("PageTwo"))
         button.pack()
+        button2.pack()
 
 #this class displays the frame that shows the file
 class PageTwo(tk.Frame):
