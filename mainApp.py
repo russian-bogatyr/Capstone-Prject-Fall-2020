@@ -14,6 +14,7 @@ import csv
 import FacialFeatureClass
 import takingPicture
 import KNNalg
+import ratioCompute
 
 #this class initializes the frame and manages it
 class Mainframe(tk.Tk):
@@ -83,7 +84,21 @@ class PicFrame(tk.Frame):
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x", expand = "yes")
-  
+        
+class KNNFrame(tk.Frame):
+    def __init__(self, master=None, **kwargs):
+        tk.Frame.__init__(self, master, **kwargs)
+        master.title("Nose Whatever the Name")
+        faceFeats = FacialFeatureClass.FacialFeatures(pat)
+        self.start_process(faceFeats)
+    def start_process(faceFeats):
+        
+        clientRatio = ratioCompute.calculate_ratio(faceFeats)
+        datastoreRatios = ratioCompute.calculate_ratios()
+        first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 5)
+        for i in range(len(first40faces)):
+            print(first40faces[i])
+            
 #starts the program
 if __name__=="__main__":
     app=Mainframe()
