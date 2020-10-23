@@ -13,41 +13,44 @@ import math
 def calculate_ratios():
     #TO_DO 
     #Change file path
-    filepath = r"C:\Users\chint\OneDrive - Embry-Riddle Aeronautical University\Documents\senior_design\Machine-Learning-Nose-Jobs\csv_files"
-    feature = pd.DataFrame(columns =["File","Delta x","Delta y","dy/dx"])
-    ratios = np.array([])
+    # filepath = r"C:\Users\chint\OneDrive - Embry-Riddle Aeronautical University\Documents\senior_design\Machine-Learning-Nose-Jobs\csv_files"
+    # feature = pd.DataFrame(columns =["File","Delta x","Delta y","dy/dx"])
+    # ratios = np.array([])
 
-    for filename in os.listdir(filepath):
-        if ".csv" in filename:
+    # for filename in os.listdir(filepath):
+    #     if ".csv" in filename:
 
-            data = pd.read_csv(os.path.join(filepath,filename))
+    #         data = pd.read_csv(os.path.join(filepath,filename))
 
-            if data.empty==False:
+    #         if data.empty==False:
 
 
             
-                #GOlDEN RATIO IS USED
-                dx = (data.loc[16]["x"]-data.loc[0]["x"])/(data.loc[16]["x"]-data.loc[42]["x"])
-                # Facial width to inner eye
+    #             #GOlDEN RATIO IS USED
+    #             dx = (data.loc[16]["x"]-data.loc[0]["x"])/(data.loc[16]["x"]-data.loc[42]["x"])
+    #             # Facial width to inner eye
                 
                 
-                dy = (data.loc[8]["y"]-data.loc[27]["y"])/(data.loc[8]["y"]-data.loc[64]["y"])
-                #Eyes to mouth to chin
+    #             dy = (data.loc[8]["y"]-data.loc[27]["y"])/(data.loc[8]["y"]-data.loc[64]["y"])
+    #             #Eyes to mouth to chin
             
-                feature = feature.append({'File' :filename, 'Delta x' : dx, 'Delta y' : dy},  
-                        ignore_index = True) 
-                ratios = np.append(ratios, ([dx, dy]) , axis = 0)
+    #             feature = feature.append({'File' :filename, 'Delta x' : dx, 'Delta y' : dy},  
+    #                     ignore_index = True) 
+    #             ratios = np.append(ratios, ([dx, dy]) , axis = 0)
 
-                final_ratios = np.reshape(ratios,(-1,2))
+    #             final_ratios = np.reshape(ratios,(-1,2))
          
 
-    #remove plot
-    y = feature["Delta y"].to_numpy()
-    x = feature["Delta x"].to_numpy()
-    #plt.plot(x,y,"o",alpha=0.2)
-    #plt.show()
-    #remove above
-    feature.to_csv(r"golden_ratio.csv",index=False)
+    # #remove plot
+    # y = feature["Delta y"].to_numpy()
+    # x = feature["Delta x"].to_numpy()
+    # #plt.plot(x,y,"o",alpha=0.2)
+    # #plt.show()
+    # #remove above
+    # feature.to_csv(r"golden_ratio.csv",index=False)
+    
+    feature = pd.read_csv("golden_ratio.csv")
+    
     return feature
 
 def calculate_ratio(facial_coordinates):
