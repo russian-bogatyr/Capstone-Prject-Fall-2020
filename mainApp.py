@@ -27,7 +27,11 @@ class Mainframe(tk.Tk):
         self.frame.pack_forget() # deletes the current frame
         self.frame = frame(self)
         self.frame.pack() # make new frame
-
+    
+    def changePat(self, frame, pat):
+        self.frame.pack_forget() # deletes the current frame
+        self.frame = frame(self)
+        self.frame.pack() # make new frame
 #this class makes a login frame for security
 class LoginFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
@@ -84,15 +88,14 @@ class PicFrame(tk.Frame):
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x", expand = "yes")
+        picButton = tk.Button(self, text="Get neighbors", command=lambda: [self.master.change(KNNFrame),KNNFrame.start_process(faceFeats)])
+        picButton.pack()
         
 class KNNFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
         master.title("Nose Whatever the Name")
-        faceFeats = FacialFeatureClass.FacialFeatures(pat)
-        self.start_process(faceFeats)
     def start_process(faceFeats):
-        
         clientRatio = ratioCompute.calculate_ratio(faceFeats)
         datastoreRatios = ratioCompute.calculate_ratios()
         first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 5)

@@ -14,12 +14,3 @@ Read and made some changes to KNNalg. I think I know how it works now. It was pu
 
 10/22/2020 13:00
 Plan to discuss KNN and potential clustering algos in today's meeting
-
-10/22/2020 16:00
-Akbas told us we need to make a trailer, so me and Anton will work on that. In the team meeting we discussed how to remake csvs and work for the weekend. I will continue to work on making KNNAlg work on mainApp
-
-10/22/2020 20:00
-Spent about on hour on mainApp.py, but could not figure out how to pass faceFeats
-
-10/23/2020 11:00
-Spent another hour on mainApp.py. I figured out how to pass, but now I run in to a new error I do not understand.s
