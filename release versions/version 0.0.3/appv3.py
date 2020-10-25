@@ -22,7 +22,6 @@ from PIL import ImageTk, Image
 #this will be imported in a later version of the app
 #we have to navigate to Sample faces first because there are more csvs than faces.
 
-os.chdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces'))
 
 #imageName = random.choice(os.listdir(os.curdir))
 fileName = []

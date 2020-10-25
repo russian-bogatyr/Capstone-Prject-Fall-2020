@@ -53,11 +53,12 @@ def calculate_ratios():
 
 def calculate_ratio(facial_coordinates):
     empty_ar = np.array([])
-    x = (facial_coordinates[16][0] - facial_coordinates[0][0]) / (facial_coordinates[16][0] - facial_coordinates[42][0])
     
+    x = (facial_coordinates[16][0] - facial_coordinates[0][0]) / (facial_coordinates[16][0] - facial_coordinates[42][0])
     y = (facial_coordinates[8][1] - facial_coordinates[27][1]) / (facial_coordinates[8][1] - facial_coordinates[64][1]) 
-    empty_ar = np.append(empty_ar, (x, y), axis = 0)
     final_ratio = np.reshape(empty_ar, (-1, 2))
+    final_ratio = np.append(empty_ar, (x, y), axis = 0)
+    #final_ratio = np.reshape(empty_ar, (-1, 2))
     # remove plot
     # plt.plot(x, y, 'r*')
     return (final_ratio)

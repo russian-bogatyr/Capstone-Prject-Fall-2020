@@ -7,7 +7,7 @@ import random
 import os
 import FacialFeatureClass
 import KNNalg
-import ratio_compute
+import ratioCompute
 import UploadClass
 import numpy as np
 import matplotlib.pyplot as plt

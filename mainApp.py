@@ -109,7 +109,10 @@ class KNNFrame(tk.Frame):
         global ratio_df
         if len(faceFeats) == 0:
             print("You didn't uplaod picture")
-        else: 
+        else:
+            print(faceFeats[0])
+            print(faceFeats[1])
+            #faceFeats = np.delete(faceFeats, 0)
             clientRatio = ratioCompute.calculate_ratio(faceFeats)
             ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = ratioDf[['Delta x','Delta y']].to_numpy()
