@@ -1,22 +1,19 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Oct 19 00:55:16 2020
-
-@author: Chris Graziano and Anton
-"""
-
-#!/usr/bin/env python3
-
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+
 import numpy as np
 import math
 
+
+
+
+
+#get_ipython().run_line_magic('matplotlib', 'notebook')
 def calculate_ratios():
     #TO_DO 
     #Change file path
-    filepath = os.path.join(os.path.dirname(os.curdir), 'csv_files')
+    filepath = r"F:\coding-interview\Machine-Learning-Nose-Jobs\csv_files"
     feature = pd.DataFrame(columns =["File","Delta x","Delta y","dy/dx"])
     ratios = np.array([])
 
@@ -39,18 +36,20 @@ def calculate_ratios():
             
                 feature = feature.append({'File' :filename, 'Delta x' : dx, 'Delta y' : dy},  
                         ignore_index = True) 
-                ratios = np.append(ratios, ([dx, dy]) , axis = 0)
 
-                final_ratios = np.reshape(ratios,(-1,2))
          
 
     #remove plot
-    y = feature["Delta y"].to_numpy()
-    x = feature["Delta x"].to_numpy()
-    plt.plot(x,y,"o",alpha=0.2)
-    plt.show()
-    #remove above
-    return final_ratios
+                
+    # y = feature["Delta y"].to_numpy()
+    # x = feature["Delta x"].to_numpy()
+    # plt.plot(x,y,"o",alpha=0.2)
+    # plt.show()
+    # #remove above
+    return feature
+
+        
+        
 
 def calculate_ratio(facial_coordinates):
     empty_ar = np.array([])
@@ -59,6 +58,6 @@ def calculate_ratio(facial_coordinates):
     y = (facial_coordinates[8][1] - facial_coordinates[27][1]) / (facial_coordinates[8][1] - facial_coordinates[64][1]) 
     empty_ar = np.append(empty_ar, (x, y), axis = 0)
     final_ratio = np.reshape(empty_ar, (-1, 2))
-    #remove plot
-    plt.plot(x, y, 'r*')
+    # remove plot
+    # plt.plot(x, y, 'r*')
     return (final_ratio)
