@@ -13,7 +13,8 @@ import math
 def calculate_ratios():
     #TO_DO 
     #Change file path
-    filepath = r"F:\coding-interview\Machine-Learning-Nose-Jobs\csv_files"
+    os.chdir(os.path.join(os.path.dirname(os.curdir), 'csv_files'))
+    filepath = os.curdir
     feature = pd.DataFrame(columns =["File","Delta x","Delta y","dy/dx"])
     ratios = np.array([])
 

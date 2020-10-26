@@ -89,7 +89,7 @@ class PicFrame(tk.Frame):
                 pat = takePic.getPatientFace()
                 break
         global faceFeats
-        faceFeats = pat
+        faceFeats = FacialFeatureClass.FacialFeatures.getCoords(pat)
         label = tk.Label(self, text="This is your face", font=tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic"))
         label.pack(side="top", fill="x", pady=10)
         im = Image.fromarray(pat)
@@ -97,7 +97,7 @@ class PicFrame(tk.Frame):
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x", expand = "yes")
-        picButton = tk.Button(self, text="Get neighbors", command=lambda: [self.master.change(KNNFrame),KNNFrame.start_process()])
+        picButton = tk.Button(self, text="Get neighbors", command=lambda: self.master.change(KNNFrame))
         picButton.pack()
         
 class KNNFrame(tk.Frame):
@@ -110,34 +110,51 @@ class KNNFrame(tk.Frame):
         if len(faceFeats) == 0:
             print("You didn't uplaod picture")
         else:
-            print(faceFeats[0])
-            print(faceFeats[1])
-            #faceFeats = np.delete(faceFeats, 0)
             clientRatio = ratioCompute.calculate_ratio(faceFeats)
-            ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
-            datastoreRatios = ratioDf[['Delta x','Delta y']].to_numpy()
-            first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 5)
+            self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
+            datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
+            first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 40)
             self.showResults()
     def showResults(self):
         global fileName
+        os.chdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces'))
         #go through each element in "element" and find file name in sample faces
         for i in range(len(first40faces)):
-                  # print(first40faces[i])
-                  element = ratio_df[(ratio_df["Delta x"] == first40faces[i][0]) & (ratio_df["Delta y"] == first40faces[i][1])]
-                  element = element.drop(columns = ["Delta x" ,"Delta y" , "dy/dx"])
-                  element["File"] = element["File"].str.replace(".csv" , ".jpg")
-                  element = element["File"].to_string(index = False)
-                  filePath = os.getcwd()+ "\\" + element.strip()
-                  try:
-
-                        img = Image.open(r'%s' % filePath)
-                        img = img.resize((150, 150), Image.ANTIALIAS)
-                        img = ImageTk.PhotoImage(img)
-                        panel = tk.Label(self, image=img)
-                        panel.image = img
-                        panel.pack()
-                  except Exception as e:
-                        print(e)
+            count = 0
+            element = self.ratioDf[(self.ratioDf["Delta x"] == first40faces[i][0]) & (self.ratioDf["Delta y"] == first40faces[i][1])]
+            element = element.drop(columns = ["Delta x" ,"Delta y" , "dy/dx"])
+            element["File"] = element["File"].str.replace(".csv" , ".jpg")
+            element = element["File"].to_string(index = False)
+            filePath = os.getcwd()+ "\\" + element.strip()
+            try:
+                img = Image.open(r'%s' % filePath)
+                img = img.resize((150, 150), Image.ANTIALIAS)
+                img = ImageTk.PhotoImage(img)
+                panel = tk.Label(self, image=img)
+                panel.image = img
+                if(count < 5):
+                    panel.grid(row=0, column=count, sticky="we")
+                elif(count < 10):
+                    panel.grid(row=1, column=count, sticky="we")
+                elif(count < 15):
+                    panel.grid(row=2, column=count, sticky="we")
+                elif(count < 20):
+                    panel.grid(row=3, column=count, sticky="we")
+                elif(count < 25):
+                    panel.grid(row=4, column=count, sticky="we")
+                elif(count < 30):
+                    panel.grid(row=5, column=count, sticky="we")
+                elif(count < 35):
+                    panel.grid(row=6, column=count, sticky="we")
+                elif(count < 40):
+                    panel.grid(row=7, column=count, sticky="we")
+                count = count + 1
+                #panel.pack(side="left", expand=True, fill="both")
+            except Exception as e:
+                print(e)
+        self.master.grid_rowconfigure(1, weight=1)
+        self.master.grid_columnconfigure(1, weight=1)
+        
 #starts the program
 if __name__=="__main__":
     app=Mainframe()

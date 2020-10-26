@@ -54,7 +54,7 @@ class NoseApp:
         if len(faceFeats) == 0:
             print("You didn't uplaod picture")
         else:
-            client_ratio = ratio_compute.calculate_ratio(faceFeats)
+            client_ratio = ratioCompute.calculate_ratio(faceFeats)
             ratio_df = pd.read_csv('F:\coding-interview\Machine-Learning-Nose-Jobs\golden_ratio.csv')
             datastore_ratios = ratio_df[['Delta x','Delta y']].to_numpy()
             first40faces = KNNalg.get_neighbors(datastore_ratios, client_ratio , 5)

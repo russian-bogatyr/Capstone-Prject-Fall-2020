@@ -10,7 +10,7 @@ import numpy as np
 import dlib
 
 class FacialFeatures():
-    def getCords(pat):
+    def getCoords(pat):
         detector = dlib.get_frontal_face_detector()
         predictor = dlib.shape_predictor(r"shape_predictor_68_face_landmarks.dat")
         #placeholder, should crate class for uploading picture

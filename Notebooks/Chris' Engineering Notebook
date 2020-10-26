@@ -25,4 +25,10 @@ Spent about on hour on mainApp.py, but could not figure out how to pass faceFeat
 Spent another hour on mainApp.py. I figured out how to pass, but now I run in to a new error I do not understand.
 
 10/24/2020 23:00
-Spent two hours on mainApp.py. After the newest release version, I made progress in displaying the graph.
+Spent two hours on mainApp.py. After the newest release version, I made progress in displaying the graph. The newest version is pushed to git.
+
+10/25/2020 12:00
+Spent an hour on mainApp.py. It works now but I want a grid.
+
+10/24/2020 20:00
+Tried to implement grid. Failed. Took one hour.
