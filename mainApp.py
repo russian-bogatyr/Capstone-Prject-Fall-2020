@@ -113,42 +113,35 @@ class KNNFrame(tk.Frame):
             clientRatio = ratioCompute.calculate_ratio(faceFeats)
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
-            first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 40)
+            first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 30)
             self.showResults()
     def showResults(self):
         global fileName
         os.chdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces'))
+        columns = 10
+        image_count = 0
+        """
+        window = Toplevel(root)
+  window.wm_geometry("1200x800")
+  canvas = Canvas(window, width = 1200, height = 800)
+  canvas.grid(row=0, column=0, sticky= "news")
+  """
         #go through each element in "element" and find file name in sample faces
         for i in range(len(first40faces)):
-            count = 0
             element = self.ratioDf[(self.ratioDf["Delta x"] == first40faces[i][0]) & (self.ratioDf["Delta y"] == first40faces[i][1])]
             element = element.drop(columns = ["Delta x" ,"Delta y" , "dy/dx"])
             element["File"] = element["File"].str.replace(".csv" , ".jpg")
             element = element["File"].to_string(index = False)
             filePath = os.getcwd()+ "\\" + element.strip()
             try:
+                image_count += 1
+                r, c = divmod(image_count - 1, columns)
                 img = Image.open(r'%s' % filePath)
                 img = img.resize((150, 150), Image.ANTIALIAS)
                 img = ImageTk.PhotoImage(img)
                 panel = tk.Label(self, image=img)
                 panel.image = img
-                if(count < 5):
-                    panel.grid(row=0, column=count, sticky="we")
-                elif(count < 10):
-                    panel.grid(row=1, column=count, sticky="we")
-                elif(count < 15):
-                    panel.grid(row=2, column=count, sticky="we")
-                elif(count < 20):
-                    panel.grid(row=3, column=count, sticky="we")
-                elif(count < 25):
-                    panel.grid(row=4, column=count, sticky="we")
-                elif(count < 30):
-                    panel.grid(row=5, column=count, sticky="we")
-                elif(count < 35):
-                    panel.grid(row=6, column=count, sticky="we")
-                elif(count < 40):
-                    panel.grid(row=7, column=count, sticky="we")
-                count = count + 1
+                panel.grid(row=r, column = c)
                 #panel.pack(side="left", expand=True, fill="both")
             except Exception as e:
                 print(e)
