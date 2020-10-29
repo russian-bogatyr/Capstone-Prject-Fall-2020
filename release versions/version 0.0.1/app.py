@@ -1,4 +1,3 @@
-
 from tkinter import Tk, Label, Button, Entry,CENTER, Toplevel
 from tkinter import font as tkfont
 from PIL import ImageTk, Image

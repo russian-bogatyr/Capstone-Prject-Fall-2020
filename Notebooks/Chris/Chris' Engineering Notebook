@@ -1,0 +1,50 @@
+Engineering Notebook.
+
+10/20/2020 15:00
+Created engineering notebook. 
+Pushed some code to Git, said code contained cosmetic changes designed to make the scripts easier to read.
+I also created the notebook folder and pushed it as well.
+
+10/20/2020 16:00
+In the team meeting it was decided that I will implement handle issue #31, and Jake will handle issue #28, since none of the people assigned to it have done it yet. 
+We have to discuss pushing back issue #14 to sprint 3 very soon, as it will almost definately need to happen.
+
+10/20/2020 18:00
+Read and made some changes to KNNalg. I think I know how it works now. It was pushed. I don't like that it is not a class.
+
+10/22/2020 13:00
+Plan to discuss KNN and potential clustering algos in today's meeting
+
+10/22/2020 16:00
+Akbas told us we need to make a trailer, so me and Anton will work on that. In the team meeting we discussed how to remake csvs and work for the weekend. I will continue to work on making KNNAlg work on mainApp
+
+10/22/2020 20:00
+Spent about on hour on mainApp.py, but could not figure out how to pass faceFeats
+
+10/24/2020 11:00
+Spent another hour on mainApp.py. I figured out how to pass, but now I run in to a new error I do not understand.
+
+10/24/2020 23:00
+Spent two hours on mainApp.py. After the newest release version, I made progress in displaying the graph. The newest version is pushed to git.
+
+10/25/2020 12:00
+Spent an hour on mainApp.py. It works now but I want a grid.
+
+10/25/2020 20:00
+Tried to implement grid. Failed. Took one hour.
+
+10/25/2020 23:00
+Succeeded in implementing grid. Recorded and uploaded video. Took half hour.
+I also managed the zenhub issues real quick
+
+10/26/2020 11:00
+Met with customer to discuss moving back issue. Went very well.
+
+10/27/2020 14:00
+About to go into meeting. Will demo trailer that we've made. Should take up the whole time.
+
+10/27/2020 16:00
+I marked the csv file issue complete in zenhub, since chintan said he was done, and I recorded the new video.
+
+10/28/2020 20:00
+I altered the powerpoint slightly, for clarification, and I made some models that will go along with my notebook. I also did peer reveiw. 

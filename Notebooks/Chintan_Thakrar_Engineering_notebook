@@ -1,0 +1,10 @@
+The purpose of the document to keep a record of our individual personal contribution towards the project. For the purpose of the previous data, I will be pointing out tasks I have achievied. From the day of this commit,
+I will update the logs based on a daily basis. 
+
+TASKS ACHIEVIED SO FAR.
+
+  1. Initaial research of what model to use for the project based on the dataset we are able to generate. 
+  I did research on all potential including KNN and SVM. I contributed by sharing my experience 
+  with AI model and previous research experience. Understanding 
+  
+  2. I worked on computing the facial points of all the pictures in our dataset. I used Vega to multiprocess 
