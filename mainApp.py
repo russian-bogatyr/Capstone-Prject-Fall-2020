@@ -37,11 +37,6 @@ class Mainframe(tk.Tk):
         self.frame.pack_forget() # deletes the current frame
         self.frame = frame(self)
         self.frame.pack() # make new frame
-    
-    def changePat(self, frame, pat):
-        self.frame.pack_forget() # deletes the current frame
-        self.frame = frame(self)
-        self.frame.pack() # make new frame
 #this class makes a login frame for security
 class LoginFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
@@ -120,12 +115,6 @@ class KNNFrame(tk.Frame):
         os.chdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces'))
         columns = 10
         image_count = 0
-        """
-        window = Toplevel(root)
-  window.wm_geometry("1200x800")
-  canvas = Canvas(window, width = 1200, height = 800)
-  canvas.grid(row=0, column=0, sticky= "news")
-  """
         #go through each element in "element" and find file name in sample faces
         for i in range(len(first40faces)):
             element = self.ratioDf[(self.ratioDf["Delta x"] == first40faces[i][0]) & (self.ratioDf["Delta y"] == first40faces[i][1])]

@@ -1,12 +1,11 @@
-import os
-import pandas as pd
-import matplotlib.pyplot as plt
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Oct  4 15:29:09 2020
 
+@author: Chris Graziano and Tony
+"""
 import numpy as np
-import math
-from math import sqrt
-import operator 
-from scipy.spatial import distance
+
 
 def euclidean_distance(test_point, neighbor_point):
     # distance = 0.0

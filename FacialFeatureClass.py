@@ -2,7 +2,7 @@
 """
 Created on Sun Oct  4 15:29:09 2020
 
-@author: Chris Graziano and also Tony
+@author: Chris Graziano and Tony
 """
 
 import cv2
