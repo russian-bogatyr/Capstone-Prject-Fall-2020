@@ -1,13 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Oct  4 15:29:09 2020
+
+@author: Chris Graziano and Tony
+"""
 import os
 import pandas as pd
-import matplotlib.pyplot as plt
-
 import numpy as np
-import math
-
-
-
-
 
 #get_ipython().run_line_magic('matplotlib', 'notebook')
 def calculate_ratios():
