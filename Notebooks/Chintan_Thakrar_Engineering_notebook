@@ -5,6 +5,34 @@ TASKS ACHIEVIED SO FAR.
 
   1. Initaial research of what model to use for the project based on the dataset we are able to generate. 
   I did research on all potential including KNN and SVM. I contributed by sharing my experience 
-  with AI model and previous research experience. Understanding 
+  with AI model and previous research experience. Understanding (2 hours)
   
-  2. I worked on computing the facial points of all the pictures in our dataset. I used Vega to multiprocess 
+  2. Computing the facial points of all the pictures in our dataset. I used Vega to multiprocess the facial point detection agorithum for all 1600 faces on our predefined dataset. (4 hours)
+  
+  3. Did research on all appropriate ratios that could be used to uniquely identify each face within a cartesian plane. This can be fed to the KNN model (3 hours)
+  
+  4. Create a method within a class to compute the appropirate ratios decided in step 4. The ouputs of this ratio were written to a CSV file. (1 hour)
+  
+  5. Contribute to an end to end system that computes the ratio of the user face (input face), compute the ratio of the the entire dataset, feed to the KNN model and identify the outputs. (3 hours)
+  
+  6.  Attended almost all meeting. (5 hours)
+   
+  7. Contributions to the documentation especally the SRS. 
+Milestones
+I consider the following to be major milestones. 
+
+  1. Find a approriate module (dlib) to allow us to extracts points from a given face.
+  
+  2. We found an appropriate ratio to create a diverse range of both X and Y points. We were looking for some ratio that creates the most variance. 
+  
+  3. We positively determined that the KNN was able to identify similar faces. WHICH IS VERY VERY EXCITING. This confirms that the ratio we used were good enough to represent a face.
+  
+The next steps
+This is what is expect to be achieved before the close of th next sprint. We entirely intend to focus on the nose classifying and clustering. 
+
+  1. Use the interpolation of the another model to generate clusters of close noses based on the outputs of the inital KNN. 
+  
+  2. Focus and wrap up all the documents
+  
+  3. Make the app more user-friendly by adding more options.
+  
