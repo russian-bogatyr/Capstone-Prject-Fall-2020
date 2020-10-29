@@ -17,6 +17,7 @@ def calculate_ratios():
     filepath = os.curdir
     feature = pd.DataFrame(columns =["File","Delta x","Delta y","dy/dx"])
     ratios = np.array([])
+    #filepath = r"csv_files"
 
     for filename in os.listdir(filepath):
         if ".csv" in filename:
@@ -47,6 +48,8 @@ def calculate_ratios():
     # plt.plot(x,y,"o",alpha=0.2)
     # plt.show()
     # #remove above
+    
+    #feature.to_csv("golden_ratio.csv")
     return feature
 
         
@@ -63,3 +66,4 @@ def calculate_ratio(facial_coordinates):
     # remove plot
     # plt.plot(x, y, 'r*')
     return (final_ratio)
+calculate_ratios()
