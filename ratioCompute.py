@@ -15,7 +15,6 @@ def calculate_ratios():
     os.chdir(os.path.join(os.path.dirname(os.curdir), 'csv_files'))
     filepath = os.curdir
     feature = pd.DataFrame(columns =["File","Delta x","Delta y","dy/dx"])
-    ratios = np.array([])
     #filepath = r"csv_files"
 
     for filename in os.listdir(filepath):

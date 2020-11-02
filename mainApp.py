@@ -23,8 +23,8 @@ fileName = []
 first40faces = []
 faceFeats = []  
 clientRatio = np.array([])
-datastore_ratios = np.array([])
-ratio_df = None
+datastoreRatios = np.array([])
+ratioDf = None
 
 #this class initializes the frame and manages it
 class Mainframe(tk.Tk):
@@ -101,7 +101,7 @@ class KNNFrame(tk.Frame):
         master.title("Nose Whatever the Name")
         global faceFeats
         global first40faces
-        global ratio_df
+        global ratioDf
         if len(faceFeats) == 0:
             print("You didn't uplaod picture")
         else:
@@ -114,7 +114,7 @@ class KNNFrame(tk.Frame):
         global fileName
         os.chdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces'))
         columns = 10
-        image_count = 0
+        imageCount = 0
         #go through each element in "element" and find file name in sample faces
         for i in range(len(first40faces)):
             element = self.ratioDf[(self.ratioDf["Delta x"] == first40faces[i][0]) & (self.ratioDf["Delta y"] == first40faces[i][1])]
@@ -123,8 +123,8 @@ class KNNFrame(tk.Frame):
             element = element["File"].to_string(index = False)
             filePath = os.getcwd()+ "\\" + element.strip()
             try:
-                image_count += 1
-                r, c = divmod(image_count - 1, columns)
+                imageCount += 1
+                r, c = divmod(imageCount - 1, columns)
                 img = Image.open(r'%s' % filePath)
                 img = img.resize((150, 150), Image.ANTIALIAS)
                 img = ImageTk.PhotoImage(img)
