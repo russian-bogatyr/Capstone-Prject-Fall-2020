@@ -4,8 +4,6 @@ Created on Mon Nov  2 17:02:55 2020
 
 @author: super
 """
-import KNNalg
-import ratioCompute
 import numpy as np
 
 #nose points are 27-35
@@ -18,7 +16,7 @@ def calcNoseRatio(facial_coordinates):
         noseArray = np.append(empty_ar, (x, y), axis = 0)
     return (noseArray)
 
-def euclidean_distance(test_point, neighbor_point):
+def euclideanDistance(test_point, neighbor_point):
     # distance = 0.0
     # for i in range(len(test_point)-1):
     #     # dst = np.linalg.norm(test_point[i][1] - neighbor_point[i][1]) 
@@ -26,9 +24,9 @@ def euclidean_distance(test_point, neighbor_point):
     return np.sqrt(np.sum((test_point - neighbor_point)**2))
     
 def calcDifference(userArray, targetArray):
-  targetRatio = ratioCompute.calculate_ratio(targetArray)
-  userRatio = ratioCompute.calculate_ratio(userArray)
+  targetRatio = calcNoseRatio(targetArray)
+  userRatio = calcNoseRatio(userArray)
   for n in range(0,8):
-      distances = KNNalg.euclidean_distance(userRatio[n], targetRatio[n])
+      distances = euclideanDistance(userRatio[n], targetRatio[n])
   return distances
   
