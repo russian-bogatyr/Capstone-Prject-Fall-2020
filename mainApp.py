@@ -13,9 +13,9 @@ from PIL import ImageTk, Image
 import os
 import csv
 import FacialFeatureClass
-import takingPicture
+import TakingPicture
 import KNNalg
-import ratioCompute
+import RatioCompute
 import numpy as np
 import pandas as pd
 
@@ -78,7 +78,7 @@ class PicFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
         master.title("Nose Whatever the Name")
-        takePic = takingPicture.TakePicture() #invokes takingPicture
+        takePic = TakingPicture.TakePicture() #invokes takingPicture
         while True:
             if takePic != None:
                 pat = takePic.getPatientFace()
@@ -105,7 +105,7 @@ class KNNFrame(tk.Frame):
         if len(faceFeats) == 0:
             print("You didn't uplaod picture")
         else:
-            clientRatio = ratioCompute.calculate_ratio(faceFeats)
+            clientRatio = RatioCompute.calculate_ratio(faceFeats)
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
             first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 30)

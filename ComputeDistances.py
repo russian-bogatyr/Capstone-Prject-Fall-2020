@@ -6,13 +6,29 @@ Created on Mon Nov  2 17:02:55 2020
 """
 import KNNalg
 import ratioCompute
-import os
-import pandas as pd
+import numpy as np
 
+#nose points are 27-35
+def calcNoseRatio(facial_coordinates):
+    empty_ar = np.array([])
+    for i in range(27, 35):
+        x = facial_coordinates[i][0]
+        y = facial_coordinates[i][1]
+        noseArray = np.reshape(empty_ar, (-1, 2))
+        noseArray = np.append(empty_ar, (x, y), axis = 0)
+    return (noseArray)
+
+def euclidean_distance(test_point, neighbor_point):
+    # distance = 0.0
+    # for i in range(len(test_point)-1):
+    #     # dst = np.linalg.norm(test_point[i][1] - neighbor_point[i][1]) 
+    #     distance += (test_point[i, 0:2] - neighbor_point[i, 0:2])**2
+    return np.sqrt(np.sum((test_point - neighbor_point)**2))
+    
 def calcDifference(userArray, targetArray):
-  clientRatio = ratioCompute.calculate_ratio(targetArray)
-  ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
-  datastoreRatios = ratioDf[['Delta x','Delta y']].to_numpy()
-  distances = KNNalg.euclidean_distance(datastoreRatios, clientRatio)
+  targetRatio = ratioCompute.calculate_ratio(targetArray)
+  userRatio = ratioCompute.calculate_ratio(userArray)
+  for n in range(0,8):
+      distances = KNNalg.euclidean_distance(userRatio[n], targetRatio[n])
   return distances
   
