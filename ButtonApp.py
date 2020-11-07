@@ -128,11 +128,9 @@ class KNNFrame(tk.Frame):
                 img = Image.open(r'%s' % filePath)
                 img = img.resize((150, 150), Image.ANTIALIAS)
                 img = ImageTk.PhotoImage(img)
-                button = tk.Button(self,image=img)
-                #panel = tk.Label(self, image=img)
-                #panel.image = img
-                button.grid(row=r, column = c)
-                #panel.pack(side="left", expand=True, fill="both")
+                button = tk.Button(self, image=img)
+                #button.grid(row=r, column = c)
+                button.pack(side="left", expand=True, fill="both")
             except Exception as e:
                 print(e)
         self.master.grid_rowconfigure(1, weight=1)
