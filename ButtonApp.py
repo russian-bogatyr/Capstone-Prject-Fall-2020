@@ -15,7 +15,7 @@ import csv
 import FacialFeatureClass
 import TakingPicture
 import KNNalg
-import RatioCompute
+import ratioCompute
 import numpy as np
 import pandas as pd
 
@@ -105,7 +105,7 @@ class KNNFrame(tk.Frame):
         if len(faceFeats) == 0:
             print("You didn't uplaod picture")
         else:
-            clientRatio = RatioCompute.calculate_ratio(faceFeats)
+            clientRatio = ratioCompute.calculate_ratio(faceFeats)
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
             first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 30)
@@ -128,8 +128,7 @@ class KNNFrame(tk.Frame):
                 img = Image.open(r'%s' % filePath)
                 img = img.resize((150, 150), Image.ANTIALIAS)
                 img = ImageTk.PhotoImage(img)
-                button= tk.Button(self)
-                button.config(image=img,width="20",height="20")
+                button = tk.Button(self,image=img)
                 #panel = tk.Label(self, image=img)
                 #panel.image = img
                 button.grid(row=r, column = c)
