@@ -24,9 +24,10 @@ def euclideanDistance(test_point, neighbor_point):
     return np.sqrt(np.sum((test_point - neighbor_point)**2))
     
 def calcDifference(userArray, targetArray):
+  distances = []
   targetRatio = calcNoseRatio(targetArray)
   userRatio = calcNoseRatio(userArray)
   for n in range(0,8):
-      distances = euclideanDistance(userRatio[n], targetRatio[n])
+      distances.append(euclideanDistance(userRatio[n], targetRatio[n]))
   return distances
   
