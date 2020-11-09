@@ -15,7 +15,7 @@ import csv
 import FacialFeatureClass
 import TakingPicture
 import KNNalg
-import RatioCompute
+import ratioCompute
 import numpy as np
 import pandas as pd
 
@@ -44,17 +44,17 @@ class LoginFrame(tk.Frame):
         master.title("Enter password")
         master.geometry("300x200")
         self.status = tk.Label(self, fg='red')
-        self.status.pack()
+        self.status.grid(row=1, column = 0)
         lbl = tk.Label(self, text='Enter password')
-        lbl.pack()
+        lbl.grid(row=1, column = 1)
         self.pwd = tk.Entry(self, show="*")
-        self.pwd.pack()
+        self.pwd.grid(row=2, column = 1)
         self.pwd.focus()
         self.pwd.bind('<Return>', self.check)
-        btn = tk.Button(self, text="Done", command=self.check)
-        btn.pack()
-        btn = tk.Button(self, text="Cancel", command=self.quit)
-        btn.pack()
+        enterBtn = tk.Button(self, text="Done", command=self.check)
+        enterBtn.grid(row=3, column = 1)
+        closeBtn = tk.Button(self, text="Cancel", command=self.quit)
+        closeBtn.grid(row=4, column = 1)
     #checks the password
     def check(self, event=None):
         if self.pwd.get() == 'password':
@@ -92,7 +92,7 @@ class PicFrame(tk.Frame):
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x", expand = "yes")
-        picButton = tk.Button(self, text="Get neighbors", command=lambda: self.master.change(KNNFrame))
+        picButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(KNNFrame))
         picButton.pack()
         
 class KNNFrame(tk.Frame):
@@ -105,7 +105,7 @@ class KNNFrame(tk.Frame):
         if len(faceFeats) == 0:
             print("You didn't uplaod picture")
         else:
-            clientRatio = RatioCompute.calculate_ratio(faceFeats)
+            clientRatio = ratioCompute.calculate_ratio(faceFeats)
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
             first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 30)
