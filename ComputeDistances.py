@@ -19,10 +19,10 @@ def calcNoseRatio(facial_coordinates):
 def euclideanDistance(test_point, neighbor_point):
     # distance = 0.0
     # for i in range(len(test_point)-1):
-    #     # dst = np.linalg.norm(test_point[i][1] - neighbor_point[i][1]) 
+    #     # dst = np.linalg.norm(test_point[i][1] - neighbor_point[i][1])
     #     distance += (test_point[i, 0:2] - neighbor_point[i, 0:2])**2
     return np.sqrt(np.sum((test_point - neighbor_point)**2))
-    
+
 def calcDifference(userArray, targetArray):
   distances = []
   targetRatio = calcNoseRatio(targetArray)
@@ -30,4 +30,11 @@ def calcDifference(userArray, targetArray):
   for n in range(0,8):
       distances.append(euclideanDistance(userRatio[n], targetRatio[n]))
   return distances
-  
+
+# Written by Jacob Preseau
+def calcDifferencesArray(userArray, targetArray):
+    differences = []
+    targetRatio = calcNoseRatio(targetArray)
+    userRatio = calcNoseRatio(userArray)
+
+    return targetRatio - userRatio
