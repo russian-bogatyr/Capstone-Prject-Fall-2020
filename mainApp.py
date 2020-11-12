@@ -25,14 +25,14 @@ faceFeats = []
 clientRatio = np.array([])
 datastoreRatios = np.array([])
 ratioDf = None
-
+clusterArray = []
 #this class initializes the frame and manages it
 class Mainframe(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self.frame = LoginFrame(self)
         self.frame.pack()
-
+        
     def change(self, frame):
         self.frame.pack_forget() # deletes the current frame
         self.frame = frame(self)
@@ -92,10 +92,10 @@ class PicFrame(tk.Frame):
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x", expand = "yes")
-        picButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(KNNFrame))
+        picButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(ClusterFrame))
         picButton.pack()
         
-class KNNFrame(tk.Frame):
+class ClusterFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
         master.title("Nose Whatever the Name")
@@ -109,6 +109,7 @@ class KNNFrame(tk.Frame):
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
             first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 30)
+            clusterArray = clusteralgo(first40faces)
             self.showResults()
     def showResults(self):
         global fileName
@@ -116,8 +117,8 @@ class KNNFrame(tk.Frame):
         columns = 10
         imageCount = 0
         #go through each element in "element" and find file name in sample faces
-        for i in range(len(first40faces)):
-            element = self.ratioDf[(self.ratioDf["Delta x"] == first40faces[i][0]) & (self.ratioDf["Delta y"] == first40faces[i][1])]
+        for i in range(len(clusterArray)):
+            element = self.ratioDf[(self.ratioDf["Delta x"] == clusterArray[i][0]) & (self.ratioDf["Delta y"] == first40faces[i][1])]
             element = element.drop(columns = ["Delta x" ,"Delta y" , "dy/dx"])
             element["File"] = element["File"].str.replace(".csv" , ".jpg")
             element = element["File"].to_string(index = False)
