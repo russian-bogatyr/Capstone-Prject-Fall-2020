@@ -42,19 +42,20 @@ class LoginFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
         master.title("Enter password")
-        master.geometry("300x200")
+        master.geometry("500x500")
         self.status = tk.Label(self, fg='red')
-        self.status.grid(row=1, column = 0)
         lbl = tk.Label(self, text='Enter password')
-        lbl.grid(row=1, column = 1)
+        lbl.grid(row=1, column = 1, sticky = "NS")
         self.pwd = tk.Entry(self, show="*")
-        self.pwd.grid(row=2, column = 1)
+        self.pwd.grid(row=1, column = 2)
         self.pwd.focus()
         self.pwd.bind('<Return>', self.check)
         enterBtn = tk.Button(self, text="Done", command=self.check)
-        enterBtn.grid(row=3, column = 1)
+        enterBtn.grid(row=2, column = 2, sticky="ew")
         closeBtn = tk.Button(self, text="Cancel", command=self.quit)
-        closeBtn.grid(row=4, column = 1)
+        closeBtn.grid(row=2, column = 1, sticky="ew")
+        master.grid_rowconfigure((0,3), weight=1)
+        master.grid_columnconfigure((0,3), weight=1)
     #checks the password
     def check(self, event=None):
         if self.pwd.get() == 'password':
@@ -66,9 +67,9 @@ class LoginFrame(tk.Frame):
 class StartFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
-        master.title("Welcome to Nose Whatever the Name")
-        master.geometry("300x200")
-        label = tk.Label(self, text="Welcome to the M-LAR experience", font=tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic"))
+        master.title("Welcome to Smart Nose Surgery")
+        master.geometry("500x500")
+        label = tk.Label(self, text="Welcome to Smart Nose Surgery", font=tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic"))
         label.pack(side="top", fill="x", pady=10)
         picButton = tk.Button(self, text="Take picture", command=lambda: self.master.change(PicFrame))
         picButton.pack()
@@ -77,7 +78,8 @@ class StartFrame(tk.Frame):
 class PicFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
-        master.title("Nose Whatever the Name")
+        master.title("Welcome to Smart Nose Surgery")
+        master.geometry("500x500")
         takePic = TakingPicture.TakePicture() #invokes takingPicture
         while True:
             if takePic != None:
@@ -91,7 +93,7 @@ class PicFrame(tk.Frame):
         img = ImageTk.PhotoImage(image = im)
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
-        imageLabel.pack(fill = "x", expand = "yes")
+        imageLabel.pack(fill = "x")
         picButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(ClusterFrame))
         picButton.pack()
         
@@ -109,7 +111,9 @@ class ClusterFrame(tk.Frame):
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
             first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 30)
-            clusterArray = clusteralgo(first40faces)
+            for i in range(len(first40faces)):
+                #victoria put the csv reader here
+                print("bottom text")
             self.showResults()
     def showResults(self):
         global fileName
@@ -117,7 +121,7 @@ class ClusterFrame(tk.Frame):
         columns = 10
         imageCount = 0
         #go through each element in "element" and find file name in sample faces
-        for i in range(len(clusterArray)):
+        for i in range(len(5)):
             element = self.ratioDf[(self.ratioDf["Delta x"] == clusterArray[i][0]) & (self.ratioDf["Delta y"] == first40faces[i][1])]
             element = element.drop(columns = ["Delta x" ,"Delta y" , "dy/dx"])
             element["File"] = element["File"].str.replace(".csv" , ".jpg")
