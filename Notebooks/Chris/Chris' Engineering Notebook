@@ -85,3 +85,18 @@ I changed how computeDistance appends after a meeting with the team. I also work
 
 11/10/2020 13:00
 Preparing to go into the meeting. Briefly worked on the grid, and touched up the zenhub.
+
+11/10/2020 16:00
+During the meeting I talked about giving some of my roles to Victoria, so I'll just do the UI.
+
+11/11/2020 13:00
+Tried to implement the grid again but it still won't center. I'll discuss with team tomorrow. Took one hour.
+
+11/12/2020 13:00
+Preparing to go into the meeting, compiling a list of reasons why I think that the grid doesn't work
+
+11/12/2020 17:00
+So the team decided that it does not matter if the UI is centered so I'm going to go ahead without fixing it.
+
+11/13/2020 17:00
+The UI now looks like it does on the balsamiq. This took one hour.
