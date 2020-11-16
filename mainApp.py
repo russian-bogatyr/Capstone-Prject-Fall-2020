@@ -104,6 +104,12 @@ class ClusterFrame(tk.Frame):
         global faceFeats
         global first40faces
         global ratioDf
+        filename = "golden_ratio.csv"
+        clusterOneArray = []
+        clusterTwoArray = []
+        clusterThreeArray = []
+        clusterFourArray = []
+        clusterFiveArray = []
         if len(faceFeats) == 0:
             print("You didn't uplaod picture")
         else:
@@ -112,10 +118,26 @@ class ClusterFrame(tk.Frame):
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
             first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 30)
             for i in range(len(first40faces)):
-                #victoria put the csv reader here
-                print("bottom text")
-            self.showResults()
-    def showResults(self):
+                with open(filename) as csv_file:
+                    csv_reader = csv.reader(csv_file, delimiter=',')
+                    line_count = 0
+                    for row in csv_reader:
+                        if line_count == 0:
+                            line_count += 1
+                        else:
+                            if row[3] == "very broad":
+                                clusterOneArray.append(row[3])
+                            if row[3] == "very broad":
+                                clusterTwoArray.append(row[3])
+                            if row[3] == "very broad":
+                                clusterThreeArray.append(row[3])
+                            if row[3] == "very broad":
+                                clusterFourArray.append(row[3])
+                            if row[3] == "very broad":
+                                clusterFiveArray.append(row[3])
+                            line_count += 1
+        self.showResults(clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray)
+    def showResults(self,clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray):
         global fileName
         os.chdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces'))
         columns = 10
