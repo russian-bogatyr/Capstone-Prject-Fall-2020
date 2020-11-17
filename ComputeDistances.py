@@ -46,7 +46,7 @@ def normalizePoints(facial_coordinates):
     minX = facial_coordinates[0][0]
     maxX = facial_coordinates[16][0]
     minY = facial_coordinates[24][1]
-    maxY = facial_coordinates[8][0]
+    maxY = facial_coordinates[8][1]
 
     normalized_points = []
 
@@ -64,7 +64,7 @@ def normalizeNosePoints(facial_coordinates):
     minX = facial_coordinates[0][0]
     maxX = facial_coordinates[16][0]
     minY = facial_coordinates[24][1]
-    maxY = facial_coordinates[8][0]
+    maxY = facial_coordinates[8][1]
 
     normalized_points = []
 
