@@ -26,6 +26,8 @@ clientRatio = np.array([])
 datastoreRatios = np.array([])
 ratioDf = None
 clusterArray = []
+Kval = 0
+
 #this class initializes the frame and manages it
 class Mainframe(tk.Tk):
     def __init__(self):
@@ -94,9 +96,20 @@ class PicFrame(tk.Frame):
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x")
+        self.pwd = tk.Entry(self, show="*")
+        self.pwd.pack()
+        self.pwd.focus()
+        self.pwd.bind('<Return>', self.check)
         picButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(ClusterFrame))
         picButton.pack()
         
+    def check(self, event=None):
+        global Kval
+        if self.pwd.get().isdigit():
+            Kval = int(self.pwd.get())
+            self.master.change(ClusterFrame)
+        else:
+            self.status.config(text="please enter an integer value")
 class ClusterFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
@@ -116,7 +129,7 @@ class ClusterFrame(tk.Frame):
             clientRatio = ratioCompute.calculate_ratio(faceFeats)
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
-            first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 30)
+            first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , Kval)
             for i in range(len(first40faces)):
                 with open(filename) as csv_file:
                     csv_reader = csv.reader(csv_file, delimiter=',')
