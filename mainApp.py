@@ -136,18 +136,18 @@ class ClusterFrame(tk.Frame):
                     line_count = 0
                     for row in csv_reader:
                         if line_count == 0:
-                            line_count += 1
-                        else:
-                            if row[3] == "very broad":
-                                clusterOneArray.append(row[3])
-                            if row[3] == "very broad":
-                                clusterTwoArray.append(row[3])
-                            if row[3] == "very broad":
-                                clusterThreeArray.append(row[3])
-                            if row[3] == "very broad":
-                                clusterFourArray.append(row[3])
-                            if row[3] == "very broad":
-                                clusterFiveArray.append(row[3])
+                            line_count += 1                        
+                        else:                    
+                            if row[2] == "Overly broad nose":
+                                clusterOneArray.append(row[1])
+                            if row[2] == "Very broad nose":
+                                clusterTwoArray.append(row[1])
+                            if row[2] == "Broad nose":
+                                clusterThreeArray.append(row[1])
+                            if row[2] == "Medium nose":
+                                clusterFourArray.append(row[1])
+                            if row[2] == "Narrow nose":
+                                clusterFiveArray.append(row[1])
                             line_count += 1
         self.showResults(clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray)
     def showResults(self,clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray):
