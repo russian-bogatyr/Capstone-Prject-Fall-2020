@@ -19,7 +19,6 @@ import ratioCompute
 import numpy as np
 import pandas as pd
 
-fileName = []
 first40faces = []
 faceFeats = []  
 clientRatio = np.array([])
@@ -96,6 +95,7 @@ class PicFrame(tk.Frame):
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x")
+        self.status = tk.Label(self, fg='red')
         self.pwd = tk.Entry(self, show="*")
         self.pwd.pack()
         self.pwd.focus()
@@ -117,7 +117,6 @@ class ClusterFrame(tk.Frame):
         global faceFeats
         global first40faces
         global ratioDf
-        filename = "dist.csv"
         clusterOneArray = []
         clusterTwoArray = []
         clusterThreeArray = []
@@ -126,6 +125,7 @@ class ClusterFrame(tk.Frame):
         if len(faceFeats) == 0:
             print("You didn't uplaod picture")
         else:
+            filename = "dist.csv"
             clientRatio = ratioCompute.calculate_ratio(faceFeats)
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
@@ -138,25 +138,24 @@ class ClusterFrame(tk.Frame):
                         if line_count == 0:
                             line_count += 1                        
                         else:                    
-                            if row[2] == "Overly broad nose":
+                            if row[1] == "Overly broad nose":
                                 print('OBN')
-                                clusterOneArray.append(row[1])
-                            if row[2] == "Very broad nose":
+                                clusterOneArray.append(row[0])
+                            if row[1] == "Very broad nose":
                                 print('VBN')
-                                clusterTwoArray.append(row[1])
-                            if row[2] == "Broad nose":
+                                clusterTwoArray.append(row[0])
+                            if row[1] == "Broad nose":
                                 print('BN')
-                                clusterThreeArray.append(row[1])
-                            if row[2] == "Medium nose":
+                                clusterThreeArray.append(row[0])
+                            if row[1] == "Medium nose":
                                 print('MN')
-                                clusterFourArray.append(row[1])
-                            if row[2] == "Narrow nose":
+                                clusterFourArray.append(row[0])
+                            if row[1] == "Narrow nose":
                                 print('NN')
-                                clusterFiveArray.append(row[1])
+                                clusterFiveArray.append(row[0])
                             line_count += 1
         self.showResults(clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray)
     def showResults(self,clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray):
-        global fileName
         os.chdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces'))
         r=0
         c=0
