@@ -19,13 +19,14 @@ import ratioCompute
 import numpy as np
 import pandas as pd
 
-fileName = []
 first40faces = []
 faceFeats = []  
 clientRatio = np.array([])
 datastoreRatios = np.array([])
 ratioDf = None
 clusterArray = []
+Kval = 0
+
 #this class initializes the frame and manages it
 class Mainframe(tk.Tk):
     def __init__(self):
@@ -94,17 +95,28 @@ class PicFrame(tk.Frame):
         imageLabel = tk.Label(self, image = img)
         imageLabel.image = img
         imageLabel.pack(fill = "x")
+        self.status = tk.Label(self, fg='red')
+        self.pwd = tk.Entry(self, show="*")
+        self.pwd.pack()
+        self.pwd.focus()
+        self.pwd.bind('<Return>', self.check)
         picButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(ClusterFrame))
         picButton.pack()
         
-class ClusterFrame(tk.Frame):
+    def check(self, event=None):
+        global Kval
+        if self.pwd.get().isdigit():
+            Kval = int(self.pwd.get())
+            self.master.change(ClusterFrame)
+        else:
+            self.status.config(text="please enter an integer value")
+class ClusterFrame(tk.Frame): 
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
         master.title("Nose Whatever the Name")
         global faceFeats
         global first40faces
         global ratioDf
-        filename = "golden_ratio.csv"
         clusterOneArray = []
         clusterTwoArray = []
         clusterThreeArray = []
@@ -113,54 +125,91 @@ class ClusterFrame(tk.Frame):
         if len(faceFeats) == 0:
             print("You didn't uplaod picture")
         else:
+            filename = "dist.csv"
             clientRatio = ratioCompute.calculate_ratio(faceFeats)
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
-            first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , 30)
+            first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , Kval)
             for i in range(len(first40faces)):
                 with open(filename) as csv_file:
                     csv_reader = csv.reader(csv_file, delimiter=',')
                     line_count = 0
                     for row in csv_reader:
                         if line_count == 0:
-                            line_count += 1
-                        else:
-                            if row[3] == "very broad":
-                                clusterOneArray.append(row[3])
-                            if row[3] == "very broad":
-                                clusterTwoArray.append(row[3])
-                            if row[3] == "very broad":
-                                clusterThreeArray.append(row[3])
-                            if row[3] == "very broad":
-                                clusterFourArray.append(row[3])
-                            if row[3] == "very broad":
-                                clusterFiveArray.append(row[3])
+                            line_count += 1                        
+                        else:                    
+                            if row[1] == "Overly broad nose":
+                                print('OBN')
+                                clusterOneArray.append(row[0])
+                            if row[1] == "Very broad nose":
+                                print('VBN')
+                                clusterTwoArray.append(row[0])
+                            if row[1] == "Broad nose":
+                                print('BN')
+                                clusterThreeArray.append(row[0])
+                            if row[1] == "Medium nose":
+                                print('MN')
+                                clusterFourArray.append(row[0])
+                            if row[1] == "Narrow nose":
+                                print('NN')
+                                clusterFiveArray.append(row[0])
                             line_count += 1
         self.showResults(clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray)
     def showResults(self,clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray):
-        global fileName
         os.chdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces'))
-        columns = 10
-        imageCount = 0
+        r=0
+        c=0
         #go through each element in "element" and find file name in sample faces
-        for i in range(len(5)):
-            element = self.ratioDf[(self.ratioDf["Delta x"] == clusterArray[i][0]) & (self.ratioDf["Delta y"] == first40faces[i][1])]
-            element = element.drop(columns = ["Delta x" ,"Delta y" , "dy/dx"])
-            element["File"] = element["File"].str.replace(".csv" , ".jpg")
-            element = element["File"].to_string(index = False)
-            filePath = os.getcwd()+ "\\" + element.strip()
-            try:
-                imageCount += 1
-                r, c = divmod(imageCount - 1, columns)
-                img = Image.open(r'%s' % filePath)
-                img = img.resize((150, 150), Image.ANTIALIAS)
-                img = ImageTk.PhotoImage(img)
-                panel = tk.Label(self, image=img)
-                panel.image = img
-                panel.grid(row=r, column = c)
-                #panel.pack(side="left", expand=True, fill="both")
-            except Exception as e:
-                print(e)
+        if clusterOneArray:
+            filePath = clusterOneArray[1]
+            img = Image.open(r'%s' % filePath)
+            img = img.resize((150, 150), Image.ANTIALIAS)
+            img = ImageTk.PhotoImage(img)
+            panel = tk.Label(self, image=img)
+            panel.image = img
+            panel.grid(row=r, column = c)
+            r += 1
+            c += 1
+        if clusterTwoArray:
+            filePath = clusterTwoArray[1]
+            img = Image.open(r'%s' % filePath)
+            img = img.resize((150, 150), Image.ANTIALIAS)
+            img = ImageTk.PhotoImage(img)
+            panel = tk.Label(self, image=img)
+            panel.image = img
+            panel.grid(row=r, column = c)
+            r += 1
+            c += 1
+        if clusterThreeArray:
+            filePath = clusterThreeArray[1]
+            img = Image.open(r'%s' % filePath)
+            img = img.resize((150, 150), Image.ANTIALIAS)
+            img = ImageTk.PhotoImage(img)
+            panel = tk.Label(self, image=img)
+            panel.image = img
+            panel.grid(row=r, column = c)
+            r += 1
+            c += 1
+        if clusterFourArray:
+            filePath = clusterFourArray[1]
+            img = Image.open(r'%s' % filePath)
+            img = img.resize((150, 150), Image.ANTIALIAS)
+            img = ImageTk.PhotoImage(img)
+            panel = tk.Label(self, image=img)
+            panel.image = img
+            panel.grid(row=r, column = c)
+            r += 1
+            c += 1
+        if clusterFiveArray:
+            filePath = clusterFiveArray[1]
+            img = Image.open(r'%s' % filePath)
+            img = img.resize((150, 150), Image.ANTIALIAS)
+            img = ImageTk.PhotoImage(img)
+            panel = tk.Label(self, image=img)
+            panel.image = img
+            panel.grid(row=r, column = c)
+            r += 1
+            c += 1
         self.master.grid_rowconfigure(1, weight=1)
         self.master.grid_columnconfigure(1, weight=1)
         

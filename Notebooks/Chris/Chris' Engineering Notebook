@@ -100,3 +100,24 @@ So the team decided that it does not matter if the UI is centered so I'm going t
 
 11/13/2020 17:00
 The UI now looks like it does on the balsamiq. This took one hour.
+
+11/15/2020 23:00
+I put the csv reader and the cluster arrays into MainApp.py for Victoria. This took one hour.
+
+11/17/2020 14:00
+Prepared for team meeting and went over some of the MainApp features with Victoria. This was brief.
+
+11/17/2020 15:00
+The meeting went well and I have some extra stuff to do that I can get out of the way quickly and then I can make the MainApp work with clusters.
+
+11/18/2020 00:00
+Implemented a system where the user chooses the K value for KNN. This took half an hour.
+
+11/19/2020 00:00
+Preparing for meeting, seeing what I can do before distance computer is ready.
+
+11/18/2020 00:00
+After the meeting it was decided that I will keep working of frontend integration.
+
+11/18/2020 00:00
+Implemented the correct collumn values now. The way Victoria did it was weird. Making the app work as intended should go very smoothly now.
