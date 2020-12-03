@@ -138,25 +138,25 @@ class ClusterFrame(tk.Frame):
                         if line_count == 0:
                             line_count += 1                        
                         else:                    
-                            if row[1] == "Overly broad nose":
-                                print('OBN')
-                                clusterOneArray.append(row[0])
                             if row[1] == "Very broad nose":
                                 print('VBN')
-                                clusterTwoArray.append(row[0])
+                                clusterOneArray.append(row[0])
                             if row[1] == "Broad nose":
                                 print('BN')
-                                clusterThreeArray.append(row[0])
+                                clusterTwoArray.append(row[0])
                             if row[1] == "Medium nose":
                                 print('MN')
-                                clusterFourArray.append(row[0])
+                                clusterThreeArray.append(row[0])
                             if row[1] == "Narrow nose":
                                 print('NN')
+                                clusterFourArray.append(row[0])
+                            if row[1] == "Very Narrow nose":
+                                print('VNN')
                                 clusterFiveArray.append(row[0])
                             line_count += 1
         self.showResults(clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray)
     def showResults(self,clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray):
-        os.chdir(os.path.join(os.path.dirname(os.curdir), 'Sample faces'))
+        os.chdir(os.path.join(os.path.dirname(os.curdir), 'dataset_3'))
         r=0
         c=0
         #go through each element in "element" and find file name in sample faces
@@ -168,7 +168,8 @@ class ClusterFrame(tk.Frame):
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            r += 1
+            chooseButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(FinalFrame))
+            chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterTwoArray:
             filePath = clusterTwoArray[1]
@@ -178,7 +179,8 @@ class ClusterFrame(tk.Frame):
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            r += 1
+            chooseButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(FinalFrame))
+            chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterThreeArray:
             filePath = clusterThreeArray[1]
@@ -188,7 +190,8 @@ class ClusterFrame(tk.Frame):
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            r += 1
+            chooseButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(FinalFrame))
+            chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterFourArray:
             filePath = clusterFourArray[1]
@@ -198,7 +201,8 @@ class ClusterFrame(tk.Frame):
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            r += 1
+            chooseButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(FinalFrame))
+            chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterFiveArray:
             filePath = clusterFiveArray[1]
@@ -208,11 +212,40 @@ class ClusterFrame(tk.Frame):
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            r += 1
+            chooseButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(FinalFrame))
+            chooseButton.grid(row=r+1, column = c)
             c += 1
         self.master.grid_rowconfigure(1, weight=1)
         self.master.grid_columnconfigure(1, weight=1)
         
+
+class FinalFrame(tk.Frame):
+    def __init__(self, master=None, **kwargs):
+        tk.Frame.__init__(self, master, **kwargs)
+        master.title("Welcome to Smart Nose Surgery")
+        master.geometry("500x500")
+        takePic = TakingPicture.TakePicture() #invokes takingPicture
+        while True:
+            if takePic != None:
+                pat = takePic.getPatientFace()
+                break
+        global faceFeats
+        faceFeats = FacialFeatureClass.FacialFeatures.getCoords(pat)
+        label = tk.Label(self, text="This is your face", font=tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic"))
+        label.pack(side="top", fill="x", pady=10)
+        im = Image.fromarray(pat)
+        img = ImageTk.PhotoImage(image = im)
+        imageLabel = tk.Label(self, image = img)
+        imageLabel.image = img
+        imageLabel.pack(fill = "x")
+        self.status = tk.Label(self, fg='red')
+        self.pwd = tk.Entry(self, show="*")
+        self.pwd.pack()
+        self.pwd.focus()
+        self.pwd.bind('<Return>', self.check)
+        picButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(ClusterFrame))
+        picButton.pack()
+
 #starts the program
 if __name__=="__main__":
     app=Mainframe()
