@@ -15,17 +15,23 @@ import csv
 import FacialFeatureClass
 import TakingPicture
 import KNNalg
-import ratioCompute
+import RatioCompute
+import ComputeDistances
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 
+pat = None
 first40faces = []
-faceFeats = []  
+faceFeats = []
 clientRatio = np.array([])
 datastoreRatios = np.array([])
 ratioDf = None
 clusterArray = []
 Kval = 0
+targetFace = "21_1_3_20170104231627770"
 
 #this class initializes the frame and manages it
 class Mainframe(tk.Tk):
@@ -33,7 +39,7 @@ class Mainframe(tk.Tk):
         tk.Tk.__init__(self)
         self.frame = LoginFrame(self)
         self.frame.pack()
-        
+
     def change(self, frame):
         self.frame.pack_forget() # deletes the current frame
         self.frame = frame(self)
@@ -63,8 +69,8 @@ class LoginFrame(tk.Frame):
             self.master.change(StartFrame)
         else:
             self.status.config(text="wrong password")
-        
-#this class is just a simple start frame        
+
+#this class is just a simple start frame
 class StartFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
@@ -82,6 +88,7 @@ class PicFrame(tk.Frame):
         master.title("Welcome to Smart Nose Surgery")
         master.geometry("500x500")
         takePic = TakingPicture.TakePicture() #invokes takingPicture
+        global pat
         while True:
             if takePic != None:
                 pat = takePic.getPatientFace()
@@ -102,7 +109,11 @@ class PicFrame(tk.Frame):
         self.pwd.bind('<Return>', self.check)
         picButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(ClusterFrame))
         picButton.pack()
-        
+
+        # Temporary button, until cluster frame works
+        changesButton = tk.Button(self, text="Display Changes", command=lambda: self.master.change(ChangesFrame))
+        changesButton.pack()
+
     def check(self, event=None):
         global Kval
         if self.pwd.get().isdigit():
@@ -110,7 +121,7 @@ class PicFrame(tk.Frame):
             self.master.change(ClusterFrame)
         else:
             self.status.config(text="please enter an integer value")
-class ClusterFrame(tk.Frame): 
+class ClusterFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
         master.title("Nose Whatever the Name")
@@ -126,7 +137,7 @@ class ClusterFrame(tk.Frame):
             print("You didn't uplaod picture")
         else:
             filename = "dist.csv"
-            clientRatio = ratioCompute.calculate_ratio(faceFeats)
+            clientRatio = RatioCompute.calculate_ratio(faceFeats)
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
             first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , Kval)
@@ -136,8 +147,8 @@ class ClusterFrame(tk.Frame):
                     line_count = 0
                     for row in csv_reader:
                         if line_count == 0:
-                            line_count += 1                        
-                        else:                    
+                            line_count += 1
+                        else:
                             if row[1] == "Very broad nose":
                                 print('VBN')
                                 clusterOneArray.append(row[0])
@@ -217,7 +228,7 @@ class ClusterFrame(tk.Frame):
             c += 1
         self.master.grid_rowconfigure(1, weight=1)
         self.master.grid_columnconfigure(1, weight=1)
-        
+
 
 class FinalFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
@@ -245,6 +256,49 @@ class FinalFrame(tk.Frame):
         self.pwd.bind('<Return>', self.check)
         picButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(ClusterFrame))
         picButton.pack()
+
+class ChangesFrame(tk.Frame):
+    def __init__(self, master=None, **kwargs):
+        tk.Frame.__init__(self, master, **kwargs)
+        master.title("Welcome to Smart Nose Surgery")
+        master.geometry("500x500")
+
+        global pat
+        global faceFeats
+        global targetFace
+
+        label = tk.Label(self, text="This is the difference in nose points", font=tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic"))
+        label.pack(side="top", fill="x", pady=10)
+
+        # Create the image
+        user_image = Image.fromarray(pat)
+
+        # Create the sets of points
+        user_points = faceFeats
+        target_points = pd.read_csv("csv_files/" + targetFace + ".csv.chip.csv")[["x", "y"]].values
+
+        # Normalize the target points
+        normalized_points = ComputeDistances.normalizePoints(target_points)
+
+        # Unnormalize the target points with respect to the user's face
+        unnormalized_points = ComputeDistances.unNormalizePoints(normalized_points, user_points[0][0], user_points[16][0], user_points[24][1], user_points[8][1], user_points[30])
+
+        # Create the figure
+        width, height = user_image.size
+        fig = Figure(figsize = (width / 100, height / 100), dpi = 100)
+
+        # Make the plot and put the nose points on top
+        image_plot = fig.add_subplot(111)
+        image_plot.imshow(pat)
+        image_plot.plot([x[0] for x in unnormalized_points[27:36]], [y[1] for y in unnormalized_points[27:36]], "r*")
+        image_plot.set_axis_off()
+
+        # Create the canvas
+        canvas = FigureCanvasTkAgg(fig, master=self.master)
+        canvas.draw()
+        canvas.get_tk_widget().pack()
+
+
 
 #starts the program
 if __name__=="__main__":

@@ -48,15 +48,30 @@ def normalizePoints(facial_coordinates):
     minY = facial_coordinates[24][1]
     maxY = facial_coordinates[8][1]
 
+    center_point = facial_coordinates[30]
+
     normalized_points = []
 
     for i in range(len(facial_coordinates)):
-        newX = (facial_coordinates[i][0] - minX) / (maxX - minX)
-        newY = (facial_coordinates[i][1] - minY) / (maxY - minY)
+        newX = (facial_coordinates[i][0] - center_point[0]) / (maxX - minX)
+        newY = (facial_coordinates[i][1] - center_point[1]) / (maxY - minY)
 
         normalized_points.append([newX, newY])
 
     return normalized_points
+
+# Does the reverse of the normalizePoints function, returning a set of absolute points in pixels.
+def unNormalizePoints(normalized_points, minX, maxX, minY, maxY, center_point):
+
+    facial_coordinates = []
+
+    for i in range(len(normalized_points)):
+        newX = int(normalized_points[i][0] * (maxX - minX) + center_point[0])
+        newY = int(normalized_points[i][1] * (maxY - minY) + center_point[1])
+
+        facial_coordinates.append([newX, newY])
+
+    return facial_coordinates
 
 # Normalizes and returns just the nose points.
 def normalizeNosePoints(facial_coordinates):
