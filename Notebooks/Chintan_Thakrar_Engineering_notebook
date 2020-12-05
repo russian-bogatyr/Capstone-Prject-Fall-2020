@@ -19,6 +19,25 @@ TASKS ACHIEVIED SO FAR.
    
   7. Contributions to the documentation especally the SRS and SDD (3 hours).
   
+  Sprint 3____________________
+  
+  1. Generation of points using the third face predicitor for all faces on the ddatabase. (1 hour)
+ .
+  2. Computation of points for new dataset. (1 hour)
+  
+  3. Anslysis on the disributuion and accuracy of the data clusters. I did this by applying statistical computations to understand
+  the nature and split of the categories. (6 hours)
+  
+  4. Documentation review.(1 hour)
+ 
+  5. Analysis on potential points for face clustering for the KNN. We belive we need a much diverse dataset, so I am looking into 
+  using different points to cluster the faces along with. (2 hours  and work in progress). This is basically find the new 
+  clustiering approach. 
+  
+  6. Participated in all meeting with the customers and team. (3 hours)
+  
+  7. Working on final demo presentation with the group. (2 hours and work in progress).
+  
 Milestones
 I consider the following to be major milestones. 
 
@@ -27,6 +46,13 @@ I consider the following to be major milestones.
   2. We found an appropriate ratio to create a diverse range of both X and Y points. We were looking for some ratio that creates the most variance. 
   
   3. We positively determined that the KNN was able to identify similar faces. WHICH IS VERY VERY EXCITING. This confirms that the ratio we used were good enough to represent a face.
+  
+  Sprint 3____________
+  
+  1. Fidning new shape predictior with more points along the nose.
+  
+  2. Recogonising the abnomalitity in the dataset and finding new dataset. 
+  
   
 The next steps
 This is what is expect to be achieved before the close of th next sprint. We entirely intend to focus on the nose classifying and clustering. 

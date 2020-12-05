@@ -110,14 +110,26 @@ Prepared for team meeting and went over some of the MainApp features with Victor
 11/17/2020 15:00
 The meeting went well and I have some extra stuff to do that I can get out of the way quickly and then I can make the MainApp work with clusters.
 
-11/18/2020 00:00
+11/18/2020 11:00
 Implemented a system where the user chooses the K value for KNN. This took half an hour.
 
-11/19/2020 00:00
+11/19/2020 14:00
 Preparing for meeting, seeing what I can do before distance computer is ready.
 
-11/18/2020 00:00
+11/18/2020 16:00
 After the meeting it was decided that I will keep working of frontend integration.
 
-11/18/2020 00:00
+11/18/2020 23:00
 Implemented the correct collumn values now. The way Victoria did it was weird. Making the app work as intended should go very smoothly now.
+
+11/22/2020 14:00
+Preparing for meeting, I worked a small amount on ClusterFrame this weekend
+
+11/22/2020 17:00
+After the meeting it was decided that I will keep working of frontend integration.
+
+11/28/2020 20:00
+More work on cluster frame
+
+12/3/2020 20:00
+I finished cluster frame. Now working on results page. One hour of work
