@@ -145,6 +145,11 @@ class ClusterFrame(tk.Frame):
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
             first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , Kval)
             for i in range(len(first40faces)):
+                element = self.ratioDf[(self.ratioDf["Delta x"] == first40faces[i][0]) & (self.ratioDf["Delta y"] == first40faces[i][1])]
+                element = element.drop(columns = ["Delta x" ,"Delta y" , "dy/dx"])
+                element["File"] = element["File"].str.replace(".csv" , ".jpg")
+                element = element["File"].to_string(index = False)
+                filePath = os.getcwd()+ "\\" + element.strip()
                 with open(filename) as csv_file:
                     csv_reader = csv.reader(csv_file, delimiter=',')
                     line_count = 0
@@ -152,7 +157,7 @@ class ClusterFrame(tk.Frame):
                         if line_count == 0:
                             line_count += 1
                         else:
-                            if first40faces[i] == row[0]:
+                            if filePath == row[0]:
                                 if row[1] == "Very broad nose":
                                     print('VBN')
                                     clusterOneArray.append(row[0])
