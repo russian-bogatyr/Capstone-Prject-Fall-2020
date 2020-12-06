@@ -179,7 +179,6 @@ class ClusterFrame(tk.Frame):
         os.chdir(os.path.join(os.path.dirname(os.curdir), 'dataset_3'))
         r=0
         c=0
-        #go through each element in "element" and find file name in sample faces
         if clusterOneArray:
             filePath = clusterOneArray[1]
             img = Image.open(r'%s' % filePath)
