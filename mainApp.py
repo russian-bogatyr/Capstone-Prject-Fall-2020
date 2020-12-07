@@ -44,7 +44,7 @@ class Mainframe(tk.Tk):
         self.frame.pack_forget() # deletes the current frame
         self.frame = frame(self)
         self.frame.pack() # make new frame
-    def assignCluster(desArray):
+    def assignCluster(self, desArray):
         global clusterArray
         clusterArray = desArray
 #this class makes a login frame for security
@@ -110,7 +110,7 @@ class PicFrame(tk.Frame):
         self.pwd.pack()
         self.pwd.focus()
         self.pwd.bind('<Return>', self.check)
-        picButton = tk.Button(self, text="Start Process", command=lambda: self.master.change(ClusterFrame))
+        picButton = tk.Button(self, text="Start Process", command=lambda: [self.check, self.master.change(ClusterFrame)])
         picButton.pack()
 
         # Temporary button, until cluster frame works
@@ -121,6 +121,7 @@ class PicFrame(tk.Frame):
         global Kval
         if self.pwd.get().isdigit():
             Kval = int(self.pwd.get())
+            print("This is kval form other call "+ str(Kval))
             self.master.change(ClusterFrame)
         else:
             self.status.config(text="please enter an integer value")
@@ -131,6 +132,7 @@ class ClusterFrame(tk.Frame):
         global faceFeats
         global first40faces
         global ratioDf
+        global Kval
         clusterOneArray = []
         clusterTwoArray = []
         clusterThreeArray = []
@@ -140,24 +142,33 @@ class ClusterFrame(tk.Frame):
             print("You didn't uplaod picture")
         else:
             filename = "dist.csv"
+            print("Hello world")
             clientRatio = ratioCompute.calculate_ratio(faceFeats)
+            print("hello universe")
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
+            print("hello galaxy")
             first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , Kval)
-            for i in range(len(first40faces)):
+            print(Kval)
+            for i in range(Kval):
+                print("I am inside for loop")
                 element = self.ratioDf[(self.ratioDf["Delta x"] == first40faces[i][0]) & (self.ratioDf["Delta y"] == first40faces[i][1])]
                 element = element.drop(columns = ["Delta x" ,"Delta y" , "dy/dx"])
                 element["File"] = element["File"].str.replace(".csv" , ".jpg")
                 element = element["File"].to_string(index = False)
-                filePath = os.getcwd()+ "\\" + element.strip()
+                filePath = os.getcwd()+ "\\dataset_3\\" + element.strip()
+                print(filePath)
                 with open(filename) as csv_file:
                     csv_reader = csv.reader(csv_file, delimiter=',')
                     line_count = 0
                     for row in csv_reader:
+                        print(row)
                         if line_count == 0:
                             line_count += 1
                         else:
-                            if filePath == row[0]:
+                            print(filePath)
+                            print(row[0])
+                            if filePath.split(os.path.sep)[-1] == row[0]:
                                 if row[1] == "Very broad nose":
                                     print('VBN')
                                     clusterOneArray.append(row[0])
@@ -180,7 +191,7 @@ class ClusterFrame(tk.Frame):
         r=0
         c=0
         if clusterOneArray:
-            filePath = clusterOneArray[1]
+            filePath = clusterOneArray[0]
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
@@ -191,7 +202,7 @@ class ClusterFrame(tk.Frame):
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterTwoArray:
-            filePath = clusterTwoArray[1]
+            filePath = clusterTwoArray[0]
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
@@ -202,18 +213,19 @@ class ClusterFrame(tk.Frame):
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterThreeArray:
-            filePath = clusterThreeArray[1]
+            filePath = clusterThreeArray[0]
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
+            print(clusterThreeArray)
             chooseButton = tk.Button(self, text="Start Process", command=lambda: [self.master.assignCluster(clusterThreeArray), self.master.change(FinalFrame)])
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterFourArray:
-            filePath = clusterFourArray[1]
+            filePath = clusterFourArray[0]
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
@@ -224,7 +236,7 @@ class ClusterFrame(tk.Frame):
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterFiveArray:
-            filePath = clusterFiveArray[1]
+            filePath = clusterFiveArray[0]
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)

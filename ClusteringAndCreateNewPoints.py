@@ -13,10 +13,8 @@ import os
 
 detector = dlib.get_frontal_face_detector()
 
-predictor68 = dlib.shape_predictor('shape_predictor_81_face_landmarks.dat')
-predictor194 = dlib.shape_predictor('shape_predictor_194_face_landmarks.dat')
+predictor68 = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
 nasal_type = {}
-points = [27,28,29,30,32,33,34,135,138,148,151]
 
 def nasalIndex(height, width):
     return (width*100)/height
@@ -56,29 +54,30 @@ def defineCluster(facial_coordinates,file_name):
 
 
 def extract_point(filepath):
-    file_tocsv = r"/scratch/thakrarc/senior_design/csv_nose"
-    name = filepath.split("/")[-1].replace(".jpg",".csv")
+    file_tocsv = r"./csv_files"
+    
     img = cv2.imread(filepath)
 
     gray = cv2.cvtColor(src=img, code=cv2.COLOR_BGR2GRAY)
-
-    empty_array_68 = []
-    empty_array_164 = []
+    
+    
+    
     faces = detector(gray)
     for face in faces:
-        
+        landmarks68 = predictor68(image=gray, box=face)
+    
         array_68 = np.matrix([[p.x, p.y] for p in landmarks68.parts()])
-        ind = np.array(range(0,array_68.shape[0]))
-        ind = np.reshape(ind,(array_68.shape[0],1))  
-        array_68 = np.concatenate((array_68, ind), axis=1) 
-        face_cord_68 = pd.DataFrame(array_68, columns = [ 'X', 'Y','Point index'])
         
+        #print(array_68)
+        face_cord_68 = pd.DataFrame(array_68, columns = ['X', 'Y'])
+        face_cord_68.to_csv(os.path.join(file_tocsv,filepath.split(os.path.sep)[-1].replace(".jpg",".csv")))
+        '''
         array_194 = np.matrix([[q.x, q.y] for q in landmarks194.parts()])
         ind = np.array(range(0,array_194.shape[0]))
         ind = np.reshape(ind,(array_194.shape[0],1))  
         array_194 = np.concatenate((array_194, ind), axis=1) 
-        face_cord_194 = pd.DataFrame(array_194, columns = ['X', 'Y','Point index'])
-       
+        face_cord_194 = pd.DataFrame(array_194, columns = ['X', 'Y'])
+        '''
         '''
         x1 = face.left() # left point
         y1 = face.top() # top point
@@ -121,19 +120,15 @@ def extract_point(filepath):
         print("164 MARKERS ",landmarks194.parts())
         '''
         
-        
-        for n in points:
-            if n <40:
-                x_1 = landmarks68.part(n).x
-                y_1 = landmarks68.part(n).y              
-            else:
-                x_2 = landmarks194.part(n).x
-                y_2 = landmarks194.part(n).y    
-            empty_array_68.append((n, x_1, y_2 ))
+        '''
+        for n in range(0,69):
+            x_1 = landmarks68.part(n).x
+            y_1 = landmarks68.part(n).y              
+            empty_array_68.append((n, x_1, y_1 ))
             #empty_array_164.append((n, x, y ))
             # Draw a circle
             #cv2.circle(img=img, center=(x, y), radius=3, color=(0,255, 0), thickness=-1)
-        
+        '''
     # show the image
     #cv2.imshow(winname="Face", mat=img)
     # Delay between every fram
@@ -143,17 +138,17 @@ def extract_point(filepath):
 
     
     #print(face_cord)
-    face_cord = pd.DataFrame(empty_array_68, columns = [ 'X', 'Y','Point index'])
-    face_cord = face_cord.set_index(points)
+    #face_cord = pd.DataFrame(empty_array_68, columns = [ 'Delta X', 'Delta Y','Point index'])
+    #face_cord = face_cord.set_index(points)
     #face_cord.to_csv(os.path.join(file_tocsv,name),index=False)
-    defineCluster(face_cord,filepath.split("/")[-1])
+    #defineCluster(face_cord,filepath.split("/")[-1])
     
     
 def euclidean_distance(point1, point2):
     return np.sqrt(np.sum((point1-point2)**2))
     
 count =0
-path_to_images = r"/scratch/thakrarc/senior_design/sample_face"
+path_to_images = r"./dataset_3"
 for filename in os.listdir(path_to_images):
     file_dir = os.path.join(path_to_images,filename)
     extract_point(file_dir)
@@ -163,13 +158,13 @@ for filename in os.listdir(path_to_images):
 
 #FILE WRITE
 
-
+'''
 with open(r"dist.csv","w") as fil:
     fil.write("File,Cat,val\n")
     for outter in nasal_type.items():
         for inner in outter[1].items():
             fil.write(str(outter[0])+","+str(inner[0])+","+str(inner[1])+"\n")
-
+'''
 #    for it in nasal_type.items():
 #        fil.write(str(it[0])+","+str(str(it[1]))+"\n")
 

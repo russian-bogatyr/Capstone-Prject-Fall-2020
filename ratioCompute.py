@@ -27,11 +27,11 @@ def calculate_ratios():
 
 
                 #GOlDEN RATIO IS USED
-                dx = (data.loc[16]["x"]-data.loc[0]["x"])/(data.loc[16]["x"]-data.loc[42]["x"])
+                dx = (data.loc[16]["X"]-data.loc[0]["X"])/(data.loc[16]["X"]-data.loc[42]["X"])
                 # Facial width to inner eye
 
 
-                dy = (data.loc[8]["y"]-data.loc[27]["y"])/(data.loc[8]["y"]-data.loc[64]["y"])
+                dy = (data.loc[8]["Y"]-data.loc[27]["Y"])/(data.loc[8]["Y"]-data.loc[64]["Y"])
                 #Eyes to mouth to chin
 
                 feature = feature.append({'File' :filename, 'Delta x' : dx, 'Delta y' : dy},
