@@ -39,7 +39,6 @@ class Mainframe(tk.Tk):
         tk.Tk.__init__(self)
         self.frame = LoginFrame(self)
         self.frame.pack()
-
     def change(self, frame):
         self.frame.pack_forget() # deletes the current frame
         self.frame = frame(self)
@@ -178,63 +177,62 @@ class ClusterFrame(tk.Frame):
                             line_count += 1
         self.showResults(clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray)
     def showResults(self,clusterOneArray, clusterTwoArray, clusterThreeArray, clusterFourArray, clusterFiveArray):
-        os.chdir(os.path.join(os.path.dirname(os.curdir), 'dataset_3'))
+        print(os.getcwd())
         r=0
         c=0
         if clusterOneArray:
-            filePath = clusterOneArray[0]
+            filePath = os.path.join(os.path.dirname(os.curdir),'dataset_3',clusterOneArray[0])
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            chooseButton = tk.Button(self, text="Choose this cluster", command=lambda: [self.master.assignCluster(clusterOneArray), self.master.change(FinalFrame)])
+            chooseButton = tk.Button(self, text="Choose Very Broad Nose", command=lambda: [self.master.assignCluster(clusterOneArray), self.master.change(FinalFrame)])
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterTwoArray:
-            filePath = clusterTwoArray[0]
+            filePath = os.path.join(os.path.dirname(os.curdir),'dataset_3',clusterTwoArray[0])
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            chooseButton = tk.Button(self, text="Choose this cluster", command=lambda: [self.master.assignCluster(clusterTwoArray), self.master.change(FinalFrame)])
+            chooseButton = tk.Button(self, text="Choose Broad Nose", command=lambda: [self.master.assignCluster(clusterTwoArray), self.master.change(FinalFrame)])
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterThreeArray:
-            filePath = clusterThreeArray[0]
+            filePath = os.path.join(os.path.dirname(os.curdir),'dataset_3',clusterThreeArray[0])
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            print(clusterThreeArray)
-            chooseButton = tk.Button(self, text="Choose this cluster", command=lambda: [self.master.assignCluster(clusterThreeArray), self.master.change(FinalFrame)])
+            chooseButton = tk.Button(self, text="Choose Medium Nose", command=lambda: [self.master.assignCluster(clusterThreeArray), self.master.change(FinalFrame)])
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterFourArray:
-            filePath = clusterFourArray[0]
+            filePath = os.path.join(os.path.dirname(os.curdir),'dataset_3',clusterFourArray[0])
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            chooseButton = tk.Button(self, text="Choose this cluster", command=lambda: [self.master.assignCluster(clusterFourArray), self.master.change(FinalFrame)])
+            chooseButton = tk.Button(self, text="Choose Narrow Nose", command=lambda: [self.master.assignCluster(clusterFourArray), self.master.change(FinalFrame)])
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterFiveArray:
-            filePath = clusterFiveArray[0]
+            filePath = os.path.join(os.path.dirname(os.curdir),'dataset_3',clusterFiveArray[0])
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            chooseButton = tk.Button(self, text="Choose this cluster", command=lambda: [self.master.assignCluster(clusterFiveArray), self.master.change(FinalFrame)])
+            chooseButton = tk.Button(self, text="Choose Very Narrow Nose", command=lambda: [self.master.assignCluster(clusterFiveArray), self.master.change(FinalFrame)])
             chooseButton.grid(row=r+1, column = c)
             c += 1
         self.master.grid_rowconfigure(1, weight=1)
@@ -250,15 +248,15 @@ class FinalFrame(tk.Frame):
         for i in range(len(clusterArray)):
             imageCount += 1
             r, c = divmod(imageCount - 1, columns)
-            filePath = clusterArray[i]
+            filePath = os.path.join(os.path.dirname(os.curdir),'dataset_3',clusterArray[i])
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            changesButton = tk.Button(self, text="Display Changes", command=lambda: [self.master.faceSetter(filePath), self.master.change(ChangesFrame)])
-            changesButton.grid(row=r+1, column = c)
+            changesButton = tk.Button(self, text="Display Changes", command=lambda: [self.master.faceSetter(clusterArray[i]), self.master.change(ChangesFrame)])
+            changesButton.grid(row=r, column = c, sticky = "S")
 class ChangesFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
@@ -277,8 +275,9 @@ class ChangesFrame(tk.Frame):
 
         # Create the sets of points
         user_points = faceFeats
-        print(os.curdir)
-        target_points = pd.read_csv("csv_files/" + targetFace[:-3] + "pointscsv")[["x", "y"]].values
+        print(os.getcwd())
+        face = "csv_files/" + targetFace[:-3] + "csv"
+        target_points = pd.read_csv(os.path.join(os.path.dirname(os.curdir),face))[["X", "Y"]].values
 
         # Normalize the target points
         normalized_points = ComputeDistances.normalizePoints(target_points)
