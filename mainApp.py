@@ -31,7 +31,7 @@ datastoreRatios = np.array([])
 ratioDf = None
 clusterArray = []
 Kval = 0
-targetFace = "21_1_3_20170104231627770"
+targetFace = ""
 
 #this class initializes the frame and manages it
 class Mainframe(tk.Tk):
@@ -47,6 +47,9 @@ class Mainframe(tk.Tk):
     def assignCluster(self, desArray):
         global clusterArray
         clusterArray = desArray
+    def faceSetter(self, chosFace):
+        global targetFace
+        targetFace = chosFace
 #this class makes a login frame for security
 class LoginFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
@@ -89,7 +92,7 @@ class PicFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
         master.title("Welcome to Smart Nose Surgery")
-        master.geometry("500x500")
+        master.geometry("1000x1000")
         takePic = TakingPicture.TakePicture() #invokes takingPicture
         global pat
         while True:
@@ -110,12 +113,8 @@ class PicFrame(tk.Frame):
         self.pwd.pack()
         self.pwd.focus()
         self.pwd.bind('<Return>', self.check)
-        picButton = tk.Button(self, text="Start Process", command=lambda: [self.check, self.master.change(ClusterFrame)])
+        picButton = tk.Button(self, text="Start Process", command=lambda: self.check)
         picButton.pack()
-
-        # Temporary button, until cluster frame works
-        changesButton = tk.Button(self, text="Display Changes", command=lambda: self.master.change(ChangesFrame))
-        changesButton.pack()
 
     def check(self, event=None):
         global Kval
@@ -142,32 +141,24 @@ class ClusterFrame(tk.Frame):
             print("You didn't uplaod picture")
         else:
             filename = "dist.csv"
-            print("Hello world")
             clientRatio = ratioCompute.calculate_ratio(faceFeats)
-            print("hello universe")
             self.ratioDf = pd.read_csv(os.path.join(os.path.dirname(os.curdir), 'golden_ratio.csv'))
             datastoreRatios = self.ratioDf[['Delta x','Delta y']].to_numpy()
-            print("hello galaxy")
             first40faces = KNNalg.get_neighbors(datastoreRatios, clientRatio , Kval)
             print(Kval)
             for i in range(Kval):
-                print("I am inside for loop")
                 element = self.ratioDf[(self.ratioDf["Delta x"] == first40faces[i][0]) & (self.ratioDf["Delta y"] == first40faces[i][1])]
                 element = element.drop(columns = ["Delta x" ,"Delta y" , "dy/dx"])
                 element["File"] = element["File"].str.replace(".csv" , ".jpg")
                 element = element["File"].to_string(index = False)
                 filePath = os.getcwd()+ "\\dataset_3\\" + element.strip()
-                print(filePath)
                 with open(filename) as csv_file:
                     csv_reader = csv.reader(csv_file, delimiter=',')
                     line_count = 0
                     for row in csv_reader:
-                        print(row)
                         if line_count == 0:
                             line_count += 1
                         else:
-                            print(filePath)
-                            print(row[0])
                             if filePath.split(os.path.sep)[-1] == row[0]:
                                 if row[1] == "Very broad nose":
                                     print('VBN')
@@ -198,7 +189,7 @@ class ClusterFrame(tk.Frame):
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            chooseButton = tk.Button(self, text="Start Process", command=lambda: [self.master.assignCluster(clusterOneArray), self.master.change(FinalFrame)])
+            chooseButton = tk.Button(self, text="Choose this cluster", command=lambda: [self.master.assignCluster(clusterOneArray), self.master.change(FinalFrame)])
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterTwoArray:
@@ -209,7 +200,7 @@ class ClusterFrame(tk.Frame):
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            chooseButton = tk.Button(self, text="Start Process", command=lambda: [self.master.assignCluster(clusterTwoArray), self.master.change(FinalFrame)])
+            chooseButton = tk.Button(self, text="Choose this cluster", command=lambda: [self.master.assignCluster(clusterTwoArray), self.master.change(FinalFrame)])
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterThreeArray:
@@ -221,7 +212,7 @@ class ClusterFrame(tk.Frame):
             panel.image = img
             panel.grid(row=r, column = c)
             print(clusterThreeArray)
-            chooseButton = tk.Button(self, text="Start Process", command=lambda: [self.master.assignCluster(clusterThreeArray), self.master.change(FinalFrame)])
+            chooseButton = tk.Button(self, text="Choose this cluster", command=lambda: [self.master.assignCluster(clusterThreeArray), self.master.change(FinalFrame)])
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterFourArray:
@@ -232,7 +223,7 @@ class ClusterFrame(tk.Frame):
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            chooseButton = tk.Button(self, text="Start Process", command=lambda: [self.master.assignCluster(clusterFourArray), self.master.change(FinalFrame)])
+            chooseButton = tk.Button(self, text="Choose this cluster", command=lambda: [self.master.assignCluster(clusterFourArray), self.master.change(FinalFrame)])
             chooseButton.grid(row=r+1, column = c)
             c += 1
         if clusterFiveArray:
@@ -243,7 +234,7 @@ class ClusterFrame(tk.Frame):
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            chooseButton = tk.Button(self, text="Start Process", command=lambda: [self.master.assignCluster(clusterFiveArray), self.master.change(FinalFrame)])
+            chooseButton = tk.Button(self, text="Choose this cluster", command=lambda: [self.master.assignCluster(clusterFiveArray), self.master.change(FinalFrame)])
             chooseButton.grid(row=r+1, column = c)
             c += 1
         self.master.grid_rowconfigure(1, weight=1)
@@ -253,10 +244,12 @@ class FinalFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
         master.title("Here is your desired cluster")
-        master.geometry("500x500")
-        r=0
-        c=0
+        master.geometry("1000x1000")
+        columns = 8
+        imageCount = 0
         for i in range(len(clusterArray)):
+            imageCount += 1
+            r, c = divmod(imageCount - 1, columns)
             filePath = clusterArray[i]
             img = Image.open(r'%s' % filePath)
             img = img.resize((150, 150), Image.ANTIALIAS)
@@ -264,7 +257,8 @@ class FinalFrame(tk.Frame):
             panel = tk.Label(self, image=img)
             panel.image = img
             panel.grid(row=r, column = c)
-            r=r+1
+            changesButton = tk.Button(self, text="Display Changes", command=lambda: [self.master.faceSetter(filePath), self.master.change(ChangesFrame)])
+            changesButton.grid(row=r+1, column = c)
 class ChangesFrame(tk.Frame):
     def __init__(self, master=None, **kwargs):
         tk.Frame.__init__(self, master, **kwargs)
@@ -283,7 +277,8 @@ class ChangesFrame(tk.Frame):
 
         # Create the sets of points
         user_points = faceFeats
-        target_points = pd.read_csv("csv_files/" + targetFace + ".csv.chip.csv")[["x", "y"]].values
+        print(os.curdir)
+        target_points = pd.read_csv("csv_files/" + targetFace[:-3] + "pointscsv")[["x", "y"]].values
 
         # Normalize the target points
         normalized_points = ComputeDistances.normalizePoints(target_points)
