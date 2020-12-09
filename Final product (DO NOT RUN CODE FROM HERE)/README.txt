@@ -1,1 +1,1 @@
-PLACEHOLDER
+To install and run this application, dowload the entire project from Github, and run mainApp.py from the master folder. 
